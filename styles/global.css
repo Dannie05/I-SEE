@@ -1,0 +1,316 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-linear: linear-gradient(to right, green, springGreen);
+  --primary-color: green;
+  --secondary-color: #870E3A;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  background: var(--bg-linear);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* display: flex;
+  flex-direction: row; */
+  font-size: 18px;
+  /* @apply max-sm:min-w-[50%]; */
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.login-container {
+  margin: 0 5px;
+  padding: 70px;
+}
+
+.form {
+  position: absolute;
+  border-radius: 10px;
+  inset: 4px;
+  margin-right: 30px;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.linear {
+  background: var(--bg-linear);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.background {
+  background: linear-gradient(to right, green, springGreen);
+}
+
+.inputBox {
+  position: relative;
+}
+
+.inputBox input {
+  position: relative;
+  width: 100%;
+  /* padding: 20px 10px 5px; */
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  color: var(--clr-bg);
+  font-size: 1.2rem;
+  z-index: 2;
+  font-weight: 600;
+  border-bottom: 2px ridge #8f8f8f;
+}
+
+.inputBox input.sign {
+  padding: 14px 10px 5px;
+  min-width: fit-content;
+}
+
+.inputBox [type="submit"] {
+  width: fit-content;
+  background: #8f8f8f;
+  font-size: large;
+  outline: none !important;
+}
+
+.inputBox span {
+  position: absolute;
+  left: 0;
+  padding: 20px 0px 10px;
+  font-size: 1rem;
+  color: #8f8f8f;
+  pointer-events: none;
+  transition: 0.5s;
+  display: none;
+}
+
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span {
+  transform: translateY(-34px);
+  color: #45f3ff;
+}
+
+.inputBox i {
+  position: absolute;
+  background: var(--bg-linear);
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: 0.5s ease-in-out;
+  z-index: 1;
+  /* display: none; */
+}
+
+.inputBox input:valid ~ i,
+.inputBox input:focus ~ i {
+  height: 40px;
+}
+
+.signup_image {
+  background: url(../public/images/logo.png);
+  transition: all 0.2s ease-in-out;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* backdrop-filter: blue; */
+}
+
+.greeting {
+  font-size: 20px !important;
+  @apply ml-2 min-w-fit md:text-xl max-sm:text-center;
+  /* color: #ebc2c2e9; */
+}
+
+.catchPhrase {
+  background: linear-gradient(
+    -45deg,
+    var(--primary-color),
+    silver,
+    #333,
+    var(--secondary-color),
+    #2222ee
+  );
+  letter-spacing: 1px;
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate 10s ease-in-out infinite;
+  -moz-animation: animate 10s ease-in-out infinite;
+  -webkit-animation: animate 10s ease-in-out infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0px 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0px 50%;
+  }
+}
+
+.glitter {
+  background: linear-gradient(-45deg, purple, silver, var(--secondary-color));
+  letter-spacing: 1px;
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  animation: shine 3s ease-in-out infinite;
+  -moz-animation: shine 3s ease-in-out infinite;
+  -webkit-animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.bg-tranquil {
+  background: linear-gradient(to right, #16222a, #3a6073);
+}
+
+.loginPage,
+.signupPage {
+  /* background: url(../public/assets/background.svg); */
+  @apply bg-no-repeat bg-cover bg-center dark:bg-white;
+}
+
+.hide-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+th,td,tr{
+  text-align: center;
+  padding: 8px 2px;
+@apply max-sm:min-w-[11rem]
+}
+tr:nth-child(even){
+  background-color: var(--secondary-color);
+  color:#fff;
+}
+tr:nth-child(odd){
+  background-color: rgb(239, 236, 236);
+  color:#000000cf;
+}
+.requestResetBtn:valid{
+  color: #45f3ff;
+}
+.banner{
+  background:url(../public/assets/banners/banner2.png);
+  transition:0.3s ease-in-out;
+  @apply min-w-full h-36 bg-no-repeat bg-cover bg-center;
+}
+.withdrawVectorImage{
+  background:url(../public/assets/vectors/withdraw.jpg);
+  transition:0.3s ease-in-out;
+  /* background-attachment:fixed; */
+  @apply w-full h-36 bg-no-repeat bg-cover md:bg-right bg-center;
+
+}
+
+.hidden{
+  display: none !important;
+}
+.about-col-1{
+  flex-basis: 35%;
+}
+.about-col-1 img{
+  width: 100%;
+  @apply rounded-full;
+}
+.about-col-2{
+  flex-basis: 60%;
+}
+.tab-titles{
+  /* display: flex; */
+  /* margin: 20px 0 40px; */
+}
+.tab-links{
+  @apply mr-12 text-xl font-medium cursor-pointer relative min-w-fit;
+  /* color:var(--secondary-color); */
+}
+
+.tab-links::after{
+  content: " ";
+  width:0;
+  height:3.5px;
+  background: var(--secondary-color);
+  position:absolute;
+  left:0;
+  bottom:-8px;
+  transition:0.5s;
+
+}
+.tab-links.active::after{
+width: 50%;
+}
+/* .tab-contents{
+  display:none;
+} */
+.active-tab{
+  display:block;
+  @apply block
+
+}
+.overlayBg{
+  background:linear-gradient(rgba(0,0,0,0.5), var(--secondary-color));
+}
+.avatar img{
+transition: transform 0.5s;
+display:block;
+}
+.avatar:hover img{
+  transform: scale(1.1)
+}
+.layer{
+  transition: height transform cursor 0.5s ease;
+}
+.avatar:hover .layer{
+  height:100%;
+  transform: scale(1.1);
+  cursor:none;
+}
+.activeBiller{
+  @apply outline outline-tahiti rounded-full p-1 max-w-fit;
+}
+option{
+  @apply text-black 
+}
