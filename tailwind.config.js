@@ -19,7 +19,7 @@ module.exports = {
       'bermuda': '#78dcca',
       'black': '#0c0c0c',
       'primary-color': '#008000',
-      'secondary-color': '#008000',
+      'secondary-color': '#6CB564',
       'bg-linear': 'linear-gradient(to right, #800080, #ef0b5a)',
       'linear': 'linear-gradient(to right, #800080, #ef0b5a)',
 

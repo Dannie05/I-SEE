@@ -124,7 +124,7 @@ export default function Login() {
           <h2></h2>
           <div className="form justify-center items-center mx-5 ">
             <form
-              className="bg-gray-800 text-black font-medium text-lg px-10 py-8 lg:w-2/5 w-1/2 my-2 max-sm:w-[90vw] max-md:w-2/3 bg-white pt-20 rounded-lg"
+              className="bg-gray-800 text-black font-medium text-lg px-4 py-8 lg:w-2/5 w-1/2 my-2 max-sm:w-[90vw] max-md:w-2/3 bg-white pt-20 rounded-lg"
               method="post"
               onSubmit={login}
             >

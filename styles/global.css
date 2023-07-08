@@ -8,6 +8,15 @@
   --secondary-color: #870E3A;
 }
 
+@font-face {
+  font-family: poppinsRegular;
+  src: url(../public/fonts/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: poppinsBold;
+  src: url(../public/fonts/Poppins-Bold.ttf);
+}
+
 html,
 body {
   padding: 0;
@@ -23,14 +32,16 @@ body {
 }
 
 a {
-  text-decoration: none !important;
+  /* text-decoration: none !important;
   font-weight: 500 !important;
   background: var(--bg-linear);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent; */
   /* display: flex;
+  color
   flex-direction: row; */
   font-size: 18px;
+  color:inherit;
   /* @apply max-sm:min-w-[50%]; */
 }
 
@@ -233,18 +244,6 @@ tr:nth-child(odd){
 .requestResetBtn:valid{
   color: #45f3ff;
 }
-.banner{
-  background:url(../public/assets/banners/banner2.png);
-  transition:0.3s ease-in-out;
-  @apply min-w-full h-36 bg-no-repeat bg-cover bg-center;
-}
-.withdrawVectorImage{
-  background:url(../public/assets/vectors/withdraw.jpg);
-  transition:0.3s ease-in-out;
-  /* background-attachment:fixed; */
-  @apply w-full h-36 bg-no-repeat bg-cover md:bg-right bg-center;
-
-}
 
 .hidden{
   display: none !important;
@@ -313,4 +312,43 @@ display:block;
 }
 option{
   @apply text-black 
+}
+
+
+.pageHeading{
+  color: #000;
+text-align: center;
+font-size: 24px;
+font-family: poppinsBold;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.shadow{
+  box-shadow: 0px 4px 20px 0px rgba(197, 197, 197, 0.40);
+}
+.fontPoppins{
+font-family: poppinsRegular;
+line-height:normal
+}
+.fontPoppinsBold{
+font-family: poppinsBold;
+line-height:normal
+}
+
+.normalText{
+  /* color: #000; */
+font-family: poppinsRegular;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.normalTextBolder{
+font-family: poppinsBold;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 }
