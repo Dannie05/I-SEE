@@ -15,7 +15,11 @@ function RenderCartItemsWithPriceTag({ item, price }) {
 function BottomSheet({load}) {
 
   return (
+<<<<<<< HEAD
     <div className="fixed bottom-0 left-0 z-40 min-w-full h-[50vh] shadow-lg bg-none rounded-t-3xl justify-between flex border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+=======
+    <div className="fixed bottom-0 left-0 z-40 min-w-full h-[45vh] shadow-lg bg-none rounded-t-3xl justify-between flex border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+>>>>>>> 3597b722d24466e0fc249d80f03922199caf2f08
       <div className="w-full font-medium mt-3 ">
         <RenderCartItemsWithPriceTag item="subtotal" price={1200} />
         <RenderCartItemsWithPriceTag item="Delivery" price={1200} />

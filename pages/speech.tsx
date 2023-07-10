@@ -52,19 +52,16 @@ return (
          {listening ? 'on' : 'off'}
        </span>
        <div>
-         <button className="uppercase btn btn-sm border bg-secondary-color cursor-pointer text-white my-1.5 active:opacity-0 dark:text-white py-2 px-8 rounded-lg w-full"
-                   style={{ letterSpacing: 1, backgroundColor: "#008000" }} type="button" onClick={resetTranscript}>Reset</button>
-         <button className="uppercase btn btn-sm border bg-secondary-color cursor-pointer text-white my-1.5 active:opacity-0 dark:text-white py-2 px-8 rounded-lg w-full"
-                   style={{ letterSpacing: 1, backgroundColor: "#008000" }} type="button" onClick={listenContinuously}>Listen</button>
-         <button className="uppercase btn btn-sm border bg-secondary-color cursor-pointer text-white my-1.5 active:opacity-0 dark:text-white py-2 px-8 rounded-lg w-full"
-                   style={{ letterSpacing: 1, backgroundColor: "#008000" }} type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
+         <button type="button" onClick={resetTranscript}>Reset</button>
+         <button type="button" onClick={listenContinuously}>Listen</button>
+         <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
        </div>
      </div>
      <div>
-       {message} message
+       {message}
      </div>
      <div>
-       <span>{transcript} transcript</span>
+       <span>{transcript}</span>
      </div>
    </div>
 );
