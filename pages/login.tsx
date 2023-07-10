@@ -246,9 +246,9 @@ export default function Login() {
                 <div>
                   <p className={"sm:text-center self-center text-center"}>
                     Don&apos;t have an account ? <br />
-                    <span className="text-[#138808] font-bold text-[16px]">
+                    <Link href="/signUp" className="text-[#138808] font-bold text-[16px]">
                       Sign Up
-                    </span>{" "}
+                    </Link>
                   </p>
                 </div>
               </span>

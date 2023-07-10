@@ -62,7 +62,7 @@ export default function Settings() {
       <Navigation />
       <RenderHeader heading="Settings" />
 
-      <Flex className="justify-center min-h-[50vh] px-3 flex-col ">
+      <Flex className="justify-center min-h-[50vh] pl-2 self-center flex-col ">
         {settingsItems.map(({ name, route }) => (
           <div
             key={name + route}
