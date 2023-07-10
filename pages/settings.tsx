@@ -55,14 +55,14 @@ export default function Settings() {
 
   const settingsItems = [
     { name: "Profile", route: "/profile" },
-    { name: "History", route: "/History" },
+    { name: "History", route: "/history" },
   ];
   return (
     <div className="dark:bg-black overflow-y-scroll dark:text-silver  ease-in-out duration-1000 min-h-screen pb-14">
       <Navigation />
       <RenderHeader heading="Settings" />
 
-      <Flex className="justify-center min-h-[50vh] px-3 flex-col ">
+      <Flex className="justify-center min-h-[50vh] pl-2 self-center flex-col ">
         {settingsItems.map(({ name, route }) => (
           <div
             key={name + route}

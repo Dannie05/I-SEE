@@ -7,9 +7,10 @@ import FilterPage from "../../components/filters";
 import Navigation from "../../components/navigation";
 import { FaCog, FaHeart, FaChevronRight, FaChevronLeft, FaArrowLeft } from "react-icons/fa";
 import Profile from "../../public/images/avatar.png";
-import Cart from "../../public/images/cart.png";
+import Buy from "../../public/images/buy.png";
 import Filter from "../../public/images/Filter.png";
 import Carousel from "../../components/carousel"
+import Link from "next/link"
 // import ModalPage from "../../components/modal";
 
 import microphone from "../../public/images/microphone.png";
@@ -89,14 +90,16 @@ export default function Home() {
     <Flex className="justify-between p-6">
     <Text className="pageHeading dark:text-white">{heading}</Text>
     <div className="flex gap-x-2">
+       <Link href="/cart">
+    
       <Image
-        width={50}
-        height={50}
-        src={Cart}
-        style={{ zoom: 1 }}
+        width={22}
+        height={22}
+        src={Buy}
         alt=""
-        className=" shrink-0 scale-1 ml-2 cursor-pointer rounded-[50px] bg-[#6CB564] shadow"
+        className="h-12 bg-secondary-color w-12 rounded-full p-2.5 shrink-0 text-gray-400 ml-2 cursor-pointer"
       />
+    </Link>
       <Image
         width={50}
         height={50}
@@ -114,10 +117,10 @@ export default function Home() {
       <>
       <RenderHeader heading="Catalog"/>       
 
-      <Flex className="mx-6 my-2.5">
+      <Flex className="mx-6 my-2.5 self-center">
         <input
           type="search"
-          className="w-[300px] h-[41px] shrink-0 rounded-[180px] border border-[#090909]"
+          className="w-[75vw] h-[41px] shrink-0 rounded-[180px] border border-[#090909]"
         />
         <Image
           width={24}
