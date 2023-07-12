@@ -63,29 +63,6 @@ export default function Login() {
       language: "en-GB",
     });
   };
-  // return (
-  //    <div>
-  //      <div>
-  //        <span>
-  //          listening:
-  //          {' '}
-  //          {listening ? 'on' : 'off'}
-  //        </span>
-  //        <div>
-  //          <button type="button" onClick={resetTranscript}>Reset</button>
-  //          <button type="button" onClick={listenContinuously}>Listen</button>
-  //          <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
-  //        </div>
-  //      </div>
-  //      <div>
-  //        {message}
-  //      </div>
-  //      <div>
-  //        <span>{transcript}</span>
-  //      </div>
-  //    </div>
-  // );
-  // };
 
   const { status } = useSession();
   const [showPassword, setShowPassword] = useState(false);
