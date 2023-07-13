@@ -1,6 +1,6 @@
 import { Text, Button, Flex, HStack } from "@chakra-ui/react";
 import Image from "next/image"
-import Buy from "../public/images/buy.png";
+import Buy from "../public/images/Buy.png";
 import Profile from "../public/images/avatar.png";
 import Link from "next/link"
 

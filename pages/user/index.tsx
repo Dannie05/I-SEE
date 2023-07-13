@@ -27,7 +27,7 @@ import {
   FaArrowLeft,
 } from "react-icons/fa";
 import Profile from "../../public/images/avatar.png";
-import Buy from "../../public/images/buy.png";
+import Buy from "../../public/images/Buy.png";
 import Filter from "../../public/images/Filter.png";
 import Carousel from "../../components/carousel";
 import Link from "next/link";
