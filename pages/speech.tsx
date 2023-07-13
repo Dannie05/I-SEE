@@ -35,7 +35,7 @@ if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
 }
 
 if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-   console.log('Your browser does not support speech recognition software! Try Chrome desktop, maybe?');
+   alert('Your browser does not support speech recognition software! Try Chrome desktop, maybe?');
 }
 const listenContinuously = () => {
    SpeechRecognition.startListening({

@@ -11,8 +11,59 @@ import apple from "../public/images/apple.png";
 import microphone from "../public/images/microphone.png";
 import google from "../public/images/google.png";
 import line from "../public/images/line.png";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import { useToast } from "@chakra-ui/react";
 
 export default function Login() {
+  const toast = useToast();
+
+  // const SpeechToText = () => {
+  const [message, setMessage] = useState("");
+  const commands = [
+    {
+      command: "reset",
+      callback: () => resetTranscript(),
+    },
+    {
+      command: "shut up",
+      callback: () => setMessage("I wasn't talking."),
+    },
+    {
+      command: "Hello",
+      callback: () => setMessage("Hi there!"),
+    },
+  ];
+  const {
+    transcript,
+    interimTranscript,
+    finalTranscript,
+    resetTranscript,
+    listening,
+  } = useSpeechRecognition({ commands });
+
+  useEffect(() => {
+    if (finalTranscript !== "") {
+      console.log("Got final result:", finalTranscript);
+    }
+  }, [interimTranscript, finalTranscript]);
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log(
+      "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
+    );
+  }
+  const listenContinuously = () => {
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: "en-GB",
+    });
+  };
+
   const { status } = useSession();
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
@@ -154,8 +205,32 @@ export default function Login() {
                   height={150}
                   src={microphone}
                   alt=""
+                  // onClick={() => {
+                  //   speakText(`${details.email}`);
+                  // }}
                   onClick={() => {
-                    speakText(`${details.email}`);
+                    // if (listenContinuously) {
+                    //   // SpeechRecognition.stopListening();
+                      toast({
+                        title: 'listening',
+                        status: 'success',
+                        // duration: 5000,
+                        isClosable: false,
+                        position: "top",
+                        size: { width: '300', height: '200' },
+                        variant: 'top-accent'
+                      });
+                    // } else {
+                    listenContinuously();
+                    setInterval(()=>{
+                      details.email = transcript;
+
+                    },1000)
+                    console.log(transcript);
+                    // setTimeout(() => {
+                    //   resetTranscript();
+                    //   SpeechRecognition.stopListening();
+                    // }, 10000);
                   }}
                   className="h-5 w-5 text-gray-400 ml-2 cursor-pointer"
                 />
@@ -187,10 +262,28 @@ export default function Login() {
                     height={150}
                     src={microphone}
                     alt=""
-                    onClick={() => {
-                      speakText(`${details.password}`);
-                    }}
+                    // onClick={() => {
+                    //   speakText(`${details.password}`);
+                    // }}                    
                     className="h-5 w-5 text-gray-400 ml-2 cursor-pointer"
+                    onClick={() => {
+                        toast({
+                          title: 'listening',
+                          status: 'success',
+                          isClosable: false,
+                          position: "top",
+                          size: { width: '300', height: '200' },
+                          variant: 'top-accent'
+                        });
+                      // } else {
+                      listenContinuously();
+                      details.password = transcript;
+                      console.log(transcript);
+                      // setTimeout(() => {
+                      //   resetTranscript();
+                      //   SpeechRecognition.stopListening();
+                      // }, 10000);
+                    }}
                   />
                 </div>
               </div>
@@ -246,7 +339,10 @@ export default function Login() {
                 <div>
                   <p className={"sm:text-center self-center text-center"}>
                     Don&apos;t have an account ? <br />
-                    <Link href="/signUp" className="text-[#138808] font-bold text-[16px]">
+                    <Link
+                      href="/signUp"
+                      className="text-[#138808] font-bold text-[16px]"
+                    >
                       Sign Up
                     </Link>
                   </p>

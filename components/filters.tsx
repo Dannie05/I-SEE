@@ -6,6 +6,8 @@ import microphone from "../public/images/microphone.png";
 import Image from "next/image";
 import { Text, Button, Box, Slider, SliderMark,SliderTrack, SliderThumb,SliderFilledTrack } from "@chakra-ui/react";
 
+ export const sizes = ["XM", "S", "M", "L", "XL"];
+ 
 export default function FilterPage({ onPressFunc }) {
   function FilterByBrandCheckList({ brand }) {
     return (
@@ -28,7 +30,6 @@ export default function FilterPage({ onPressFunc }) {
     );
   }
 
-  const sizes = ["XM", "S", "M", "L", "XL"];
     const colors = [
         "#fff",
         "#200E32",
