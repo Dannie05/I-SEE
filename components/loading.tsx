@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import React from 'react'
 import LottieAnimation from '../utilities/LottieAnimation';
 import animationData from '../public/assets/lottie/dlf10_rbSZi5suM6.json';
