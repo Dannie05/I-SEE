@@ -20,49 +20,6 @@ export default function Login() {
   const toast = useToast();
 
   // const SpeechToText = () => {
-  const [message, setMessage] = useState("");
-  const commands = [
-    {
-      command: "reset",
-      callback: () => resetTranscript(),
-    },
-    {
-      command: "shut up",
-      callback: () => setMessage("I wasn't talking."),
-    },
-    {
-      command: "Hello",
-      callback: () => setMessage("Hi there!"),
-    },
-  ];
-  const {
-    transcript,
-    interimTranscript,
-    finalTranscript,
-    resetTranscript,
-    listening,
-  } = useSpeechRecognition({ commands });
-
-  useEffect(() => {
-    if (finalTranscript !== "") {
-      console.log("Got final result:", finalTranscript);
-    }
-  }, [interimTranscript, finalTranscript]);
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return null;
-  }
-
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.log(
-      "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
-    );
-  }
-  const listenContinuously = () => {
-    SpeechRecognition.startListening({
-      continuous: true,
-      language: "en-GB",
-    });
-  };
 
   const { status } = useSession();
   const [showPassword, setShowPassword] = useState(false);
@@ -155,14 +112,51 @@ export default function Login() {
     synth.speak(utterance);
   };
 
-  // useEffect(() => {
-  //   if (recognition) {
-  //     recognition.onresult = (event) => {
-  //       const transcript = event.results[0][0].transcript;
-  //       setValue({ ...value, password: transcript });
-  //     };
-  //   }
-  // }, [recognition]);
+
+  const [message, setMessage] = useState("");
+  const commands = [
+    {
+      command: "reset",
+      callback: () => resetTranscript(),
+    },
+    {
+      command: "shut up",
+      callback: () => setMessage("I wasn't talking."),
+    },
+    {
+      command: "Hello",
+      callback: () => setMessage("Hi there!"),
+    },
+  ];
+  const {
+    transcript,
+    interimTranscript,
+    finalTranscript,
+    resetTranscript,
+    listening,
+  } = useSpeechRecognition({ commands });
+
+  useEffect(() => {
+    if (finalTranscript !== "") {
+      console.log("Got final result:", finalTranscript);
+    }
+  }, [interimTranscript, finalTranscript]);
+  
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log(
+      "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
+    );
+  }
+  const listenContinuously = () => {
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: "en-GB",
+    });
+  };
 
   return (
     <div className="ease-in-out duration-700  before:absolute inset-0 min-h-screen dark:bg-black dark:text-silver">
