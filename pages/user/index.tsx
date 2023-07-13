@@ -36,7 +36,7 @@ import Link from "next/link";
 import microphone from "../../public/images/microphone.png";
 import { RenderModalHeader } from "../../components/modal";
 
-export default function Home() {
+export default function Home({userInfo}:any) {
   const [isMobile, setIsMobile] = useState(false);
   const [activeNavLink, setActiveNavLink] = useState("Home");
   const [display, setDisplay] = useState("none");

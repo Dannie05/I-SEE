@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { useSession } from "next-auth/react"
 import Home from "../user"
 import axios from 'axios';
-import Upgrade from "../../components/Upgrade"
 import { IUser } from "../../interface"
 import useSWR from 'swr'
 import {signIn} from 'next-auth/react'
