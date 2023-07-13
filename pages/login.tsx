@@ -62,14 +62,14 @@ export default function Login() {
     setDetails({ ...details, [name]: value });
   };
 
-  useEffect(() => {
-    if ("SpeechRecognition" in window) {
-      const recognition = new window.SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = false;
-      setRecognition(recognition);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ("SpeechRecognition" in window) {
+  //     const recognition = new window.SpeechRecognition();
+  //     recognition.continuous = true;
+  //     recognition.interimResults = false;
+  //     setRecognition(recognition);
+  //   }
+  // }, []);
 
   const handleSpeechToText = () => {
     if (recognition) {
@@ -89,19 +89,19 @@ export default function Login() {
   //     }
   //   }, [recognition, details]);
 
-  useEffect(() => {
-    if ("speechSynthesis" in window) {
-      const synth = window.speechSynthesis;
-      setSynth(synth);
-    }
+  // useEffect(() => {
+  //   if ("speechSynthesis" in window) {
+  //     const synth = window.speechSynthesis;
+  //     setSynth(synth);
+  //   }
 
-    if ("SpeechRecognition" in window) {
-      const recognition = new window.SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = false;
-      setRecognition(recognition);
-    }
-  }, []);
+  //   if ("SpeechRecognition" in window) {
+  //     const recognition = new window.SpeechRecognition();
+  //     recognition.continuous = true;
+  //     recognition.interimResults = false;
+  //     setRecognition(recognition);
+  //   }
+  // }, []);
 
   const speakText = (text) => {
     if (synth && synth.speaking) {
