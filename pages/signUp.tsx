@@ -142,7 +142,6 @@ export default function SignUp() {
     <div className="ease-in-out duration-700 overflow-none before:absolute inset-0 min-h-screen dark:bg-black dark:text-silver pb-8 signupPage">
       <div className="flex flex-col items-center justify-center pt-10 min-h-screen  md:px-8 min-w-full">
         <div>
-          {/* <Avatar size={'md'} src={'/images/recharge.jpg'} /> */}
           <Image src='/images/logo.png' alt='logo' height={80} className='rounded-full' width={180} />
         </div>
         {/* <div className="signup_image w-1/2 min-h-[70vh] inset-0 rounded-md mr-3 max-md:-my-20 max-sm:w-screen max-md:w-screen max-md:hidden"></div> */}

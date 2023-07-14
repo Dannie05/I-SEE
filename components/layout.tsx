@@ -5,7 +5,7 @@ import styles from './layout.module.css'
 import Link from 'next/link'
 import "bootstrap/dist/css/bootstrap.min.css"
 export const name = 'Marcel Uchenna'
-export const siteTitle = "Recharge profit"
+export const siteTitle = "I-SEE"
 export default function Layout({
   children,
   home
