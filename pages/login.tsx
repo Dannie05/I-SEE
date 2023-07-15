@@ -216,10 +216,7 @@ export default function Login() {
                       });
                     // } else {
                     listenContinuously();
-                    setInterval(()=>{
-                      details.email = transcript;
-
-                    },1000)
+                    details.email = transcript;
                     console.log(transcript);
                     // setTimeout(() => {
                     //   resetTranscript();
@@ -229,6 +226,7 @@ export default function Login() {
                   className="h-5 w-5 text-gray-400 ml-2 cursor-pointer"
                 />
               </div>
+              
               <div className="mb-4 ml-2 min-w-full ">
                 <label
                   className="block font-medium mb-2 -translate-x-3"

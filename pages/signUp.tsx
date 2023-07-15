@@ -1,17 +1,19 @@
-
-
+import React from "react";
+import Image from "next/image";
+import microphone from "../public/images/microphone.png";
+import apple from "../public/images/apple.png";
+import google from "../public/images/google.png";
+import line from "../public/images/line.png";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
-import { FcGoogle } from "react-icons/fc";
-import {  BsApple, BsEyeFill, BsEyeSlashFill} from "react-icons/bs";
-import Image from "next/image";
 import { Text, useToast } from "@chakra-ui/react";
+import { BsApple, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 
-export default function SignUp() {
+const SignUp = () => {
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [isEmail, setIsEmail] = useState<boolean | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -21,15 +23,16 @@ export default function SignUp() {
   }>({ exists: false, name: null });
   const toast = useToast();
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
     email: "",
     password: "",
     re_password: "",
-    username: "",
-    country:"",
-    address:"",
+
+    // first_name: "",
+    // last_name: "",
+    // phone: "",    
+    // username: "",
+    // country: "",
+    // address: "",
   });
 
   const toggleShowPassword = () => {
@@ -39,25 +42,27 @@ export default function SignUp() {
     const { value, name } = target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const getReferal = async ({
+  // const getReferal = async ({
+  //   target,
+  // }: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = target;
+  //   if (value.length > 3) {
+  //     try {
+  //       const response = await axios.get<{
+  //         exists: boolean | null;
+  //         name: string | null;
+  //       }>(`/api/user/get-referal?username=${value.toLowerCase()}`);
+  //       setRefDAta(response.data);
+  //     } catch (error) {
+  //       setRefDAta(null);
+  //     }
+  //   } else {
+  //     setRefDAta(null);
+  //   }
+  // };
+  const checkEmail = async ({
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = target;
-    if (value.length > 3) {
-      try {
-        const response = await axios.get<{
-          exists: boolean | null;
-          name: string | null;
-        }>(`/api/user/get-referal?username=${value.toLowerCase()}`);
-        setRefDAta(response.data);
-      } catch (error) {
-        setRefDAta(null);
-      }
-    } else {
-      setRefDAta(null);
-    }
-  };
-  const checkEmail = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const { value } = target;
     const isEmailValid = emailRegex.test(value);
@@ -74,21 +79,21 @@ export default function SignUp() {
       setIsEmail(false);
     }
   };
-  const checkUser = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = target;
-    if (value.length > 3) {
-      try {
-        const response = await axios.get<{ isValid: boolean | null }>(
-          `/api/user/check-username?username=${value.toLowerCase()}`
-        );
-        setIsValid(response.data.isValid);
-      } catch (error) {
-        setIsValid(null);
-      }
-    } else {
-      setIsValid(false);
-    }
-  };
+  // const checkUser = async ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = target;
+  //   if (value.length > 3) {
+  //     try {
+  //       const response = await axios.get<{ isValid: boolean | null }>(
+  //         `/api/user/check-username?username=${value.toLowerCase()}`
+  //       );
+  //       setIsValid(response.data.isValid);
+  //     } catch (error) {
+  //       setIsValid(null);
+  //     }
+  //   } else {
+  //     setIsValid(false);
+  //   }
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.post("/api/create", formData);
@@ -96,14 +101,14 @@ export default function SignUp() {
     const { user } = data;
     if (user != null) {
       toast({
-        title: 'User created successfully',
+        title: "User created successfully",
         description: data.error,
-        status: 'success',
+        status: "success",
         duration: 5000,
         isClosable: true,
         position: "top",
-        size: { width: '300', height: '200' },
-        variant: 'top-accent'
+        size: { width: "300", height: "200" },
+        variant: "top-accent",
       });
       const res = await signIn("credentials", {
         email: user.email,
@@ -112,223 +117,179 @@ export default function SignUp() {
       });
       if (res.ok === true && res.status === 200) {
         toast({
-          title: 'Sign in success',
-          description: 'Sign in of new user successful',
-          status: 'success',
+          title: "Sign in success",
+          description: "Sign in of new user successful",
+          status: "success",
           duration: 5000,
           isClosable: true,
           position: "top",
-          size: { width: '300', height: '200' },
-          variant: 'top-accent'
+          size: { width: "300", height: "200" },
+          variant: "top-accent",
         });
         Router.push("/dashboard");
         return;
       }
     } else {
       toast({
-        title: 'User creation Failed',
+        title: "User creation Failed",
         description: data.error,
-        status: 'warning',
+        status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
-        size: { width: '300', height: '200' },
-        variant: 'top-accent'
+        size: { width: "300", height: "200" },
+        variant: "top-accent",
       });
       return;
     }
   };
+
   return (
-    <div className="ease-in-out duration-700 overflow-none before:absolute inset-0 min-h-screen dark:bg-black dark:text-silver pb-8 signupPage">
-      <div className="flex flex-col items-center justify-center pt-10 min-h-screen  md:px-8 min-w-full">
+    <div className="flex items-center justify-center min-h-screen  ">
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded pt-6 pb-8 mb-4 md:px-12 px-5 mx-5 sm:w-1/2 md:w-1/3 min-w-full">
+        <div className="mb-4">
+          <h2 className="text-center font-bold mb-4">SIGN UP</h2>
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Name
+          </label>
+          <div className="relative flex items-center">
+            <input
+              className="appearance-none border-b-2 rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-medium text-lg"
+              required
+              type="email"
+              onInput={checkEmail}
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              value={formData.email}
+            />
+            {isEmail !== null &&
+              (isEmail ? (
+                <FaCheckCircle color="green" />
+              ) : (
+                <FaTimesCircle color="red" />
+              ))}
+            <Image
+              width={200}
+              height={150}
+              src={microphone}
+              alt=""
+              className="h-5 w-5 text-gray-400 ml-2"
+            />
+          </div>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Password
+          </label>
+          <div className="flex items-center justify-center border-b-2 border-b-[silver]">
+            <input
+              className="appearance-none  py-3 px-3 leading-tight font-medium text-lg w-full p-1 outline-none"
+              required
+              type={showPassword ? "text" : "password"}
+              onChange={handleChange}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+            />
+            <div className="text-secondary-color " onClick={toggleShowPassword}>
+              {showPassword ? <BsEyeFill /> : <BsEyeSlashFill />}
+            </div>
+            <Image
+              width={200}
+              height={150}
+              src={microphone}
+              alt=""
+              className="h-5 w-5 text-gray-400 ml-2"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Re-write Password
+          </label>
+          <div className="flex items-center justify-center border-b-2 border-b-[silver]">
+            <input
+              className="appearance-none  py-3 px-3 leading-tight font-medium text-lg w-full p-1 outline-none"
+              required
+              type={showPassword ? "text" : "password"}
+              onChange={handleChange}
+              name="re_password"
+              placeholder="Repeat password"
+              value={formData.re_password}
+            />
+            <div className="text-secondary-color " onClick={toggleShowPassword}>
+              {showPassword ? <BsEyeFill /> : <BsEyeSlashFill />}
+            </div>
+            <Image
+              width={200}
+              height={150}
+              src={microphone}
+              alt=""
+              className="h-5 w-5 text-gray-400 ml-2"
+            />
+          </div>
+        </div>
+        <div className="flex-end text-right text-red-700 mt-1">
+          Forgot Password
+        </div>
+        <div className="flex items-center justify-between mt-5">
+          <div className="flex items-center">
+          <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            <label className="ml-2 text-gray-700">
+              I agree to the{" "}
+              <span className="text-[#138808]"> Terms & Conditions </span> and{" "}
+              <span className="text-[#138808]">Privacy Policy </span>
+            </label>
+          </div>
+        </div>
+        <div className="flex items-center justify-center my-3  min-w-full">
+        <button
+              type="submit"
+              className="uppercase btn btn-sm border bg-secondary-color cursor-pointer  my-1.5 active:opacity-0 normalTextBolder rounded-lg w-full py-2 text-medium text-base"
+              style={{ letterSpacing: 1, backgroundColor: "#6CB564" }}
+            >
+              Create account
+            </button>
+        </div>
+ 
+
+        <div className="flex justify-evenly mt-5 mb-3">
+          <p className="pt-3">
+            <Image
+              width={200}
+              height={150}
+              src={line}
+              alt=""
+              className="pb-3"
+            />
+          </p>
+          <p className="font-bold px-3  leading-8 ">OR</p>
+          <p className="pt-3">
+            <Image width={200} height={150} src={line} alt="" />
+          </p>
+        </div>
+        <div className="flex justify-evenly">
+          <p className="">
+            <Image width={50} height={50} src={apple} alt="" className="pb-3" />
+          </p>
+          <p>
+            <Image width={50} height={50} src={google} alt="" />
+          </p>
+        </div>
         <div>
-          <Image src='/images/logo.png' alt='logo' height={80} className='rounded-full' width={180} />
+          <p>
+            Don't have an account?{" "}
+            <span className="text-[#138808] font-bold text-[16px]">
+              Sign Up
+            </span>{" "}
+          </p>
         </div>
-        {/* <div className="signup_image w-1/2 min-h-[70vh] inset-0 rounded-md mr-3 max-md:-my-20 max-sm:w-screen max-md:w-screen max-md:hidden"></div> */}
-
-        <div className="lg:w-2/5 w-1/2 my-2 max-sm:w-[90vw] max-md:w-2/3 sm:px-10 py-8 text-black font-medium text-lg bg-white rounded-md">
-          <Text letterSpacing={'1px'} className="text-center font-bold text-xl uppercase sm:-mb-6 linear">Create a secured Account</Text>
-          <form
-            onSubmit={handleSubmit}
-            className="h-full inputBox max-md:px-4 md:mt-14 "
-          >
-            {/* <input
-              required
-              type="text"
-              onChange={handleChange}
-              name="first_name"
-              placeholder="First Name"
-              value={formData.first_name}
-              className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-            />
-            <input
-              required
-              type="text"
-              onChange={handleChange}
-              name="last_name"
-              placeholder="Last Name"
-              value={formData.last_name}
-              className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-            />
-            <input
-              required
-              type="tel"
-              onChange={handleChange}
-              name="phone"
-              placeholder="Your Phone Number"
-              value={formData.phone}
-              className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-            /> */}
-
-             {/* <input
-              required
-              type="text"
-              onChange={handleChange}
-              name="country"
-              placeholder="country"
-              value={formData.country}
-              className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-            />
-
-             <input
-              required
-              type="text"
-              onChange={handleChange}
-              name="address"
-              placeholder="address"
-              value={formData.address}
-              className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-            /> */}
-
-            <div className='flex items-center'>
-              <input
-                required
-                type="text"
-                onChange={handleChange}
-                name="username"
-                placeholder="Username"
-                onInput={checkUser}
-                value={formData.username}
-                className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-              />
-              {isValid !== null &&
-                (isValid ? (
-                  <FaCheckCircle color="green" />
-                ) : (
-                  <FaTimesCircle color="red" />
-                ))}
-            </div>
-            <div className='flex items-center'>
-              <input
-                required
-                type="email"
-                onInput={checkEmail}
-                name="email"
-                placeholder="Email"
-                onChange={handleChange}
-                value={formData.email}
-                className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-              />
-              {isEmail !== null &&
-                (isEmail ? (
-                  <FaCheckCircle color="green" />
-                ) : (
-                  <FaTimesCircle color="red" />
-                ))}
-            </div>
-            {/* {ref_data !== null && ref_data.exists ? (
-              <p className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]">
-                Your referer : {ref_data.name}{" "}
-              </p>
-            ) : (
-              <p>Referer must be valid to proceed</p>
-            )} */}
-            {/* <div style={{ display: "flex", alignItems: "center" }}>
-              <input
-                required
-                type="text"
-                onChange={handleChange}
-                onBlur={getReferal}
-                name="referer"
-                placeholder="Referer"
-                value={formData.referer}
-                className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-              />
-              {ref_data != null &&
-                (ref_data.exists ? (
-                  <FaCheckCircle color="green" />
-                ) : (
-                  <FaTimesCircle color="red" />
-                ))}
-            </div> */}
-            <div className='flex items-center justify-center'>
-              <div>
-                <input
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  onChange={handleChange}
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-                />
-
-                <input
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  onChange={handleChange}
-                  name="re_password"
-                  placeholder="Repeat password"
-                  value={formData.re_password}
-                  className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign focus:bg-[#efecec87]"
-                />
-              </div>
-              <div className="text-secondary-color border" onClick={toggleShowPassword}>{showPassword ? <BsEyeFill /> : <BsEyeSlashFill />}</div>
-            </div>
-
-
-            {(isValid) ? (
-              <button className="my-3 focus:outline rounded-md focus:border-none relative px-5 py-3 sign uppercase w-fit border-none self-center left-1/3 btn-success btn ease-in-out duration-500">
-                Sign Up
-              </button>
-            ) :
-              (
-                <button type="button" className="uppercase btn btn-sm border rounded-md hover:translate-y-[-2px] background cursor-pointer text-white my-1.5 px-6 active:opacity-0 -mr-6"
-                  onClick={() => {
-                    toast({
-                      title: 'Incorrect Details',
-                      description: 'Either Username or email is taken OR referer is incorrect, Check and try again',
-                      status: 'warning',
-                      duration: 5000,
-                      isClosable: true,
-                      position: "bottom",
-                      size: { width: '300', height: '200' },
-                      variant: 'top-accent'
-                    })
-                  }}>
-                  Sign Up
-                </button>
-              )
-            }
-          </form>
-        </div>
-      </div>
-      <p className="gap-1 flex flex-row items-center justify-center">
-        Have an account already?
-        <span className="bg-white w-fit p-1.5 rounded-md">
-          <Link href="/login" className="w-fit">
-            login
-          </Link>
-        </span>
-      </p>
-      <div className="mb-10 flex gap-2 text-3xl items-center justify-center icons">
-        <p className="p-2 rounded-full bg-white">
-          <FcGoogle />
-        </p>
-        <p className="p-2 rounded-full bg-white">
-          <BsApple className="text-black" />
-        </p>
-      </div>
+      
+      </form>
     </div>
   );
-}
+};
+
+export default SignUp;
