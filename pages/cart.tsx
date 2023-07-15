@@ -9,6 +9,8 @@ import Image from "next/image";
 import { TbPlus } from "react-icons/tb";
 import { AiOutlineClose } from "react-icons/ai";
 import Loading from "../components/loading";
+import SuccessFul from "../components/success";
+import ConfirmOrderDetails from "../components/confirmDetails";
 
 function RenderHeader({ heading }) {
   return (
@@ -67,17 +69,41 @@ function RenderHistoryItems({ image }) {
 
 export default function Cart() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [confirm, setIsConfirm] = useState(false);
 
   function DisplayLoadingAnimation() {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, 4000);
+    setIsConfirm(true);
+  }
+  function DisplaySuccessAnimation() {
+    // setIsLoading(true);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 4000);
+    setIsSuccessful(true);
   }
 
   if (isLoading) {
     return <Loading />;
   }
+
+  if (isSuccessful) {
+    return <SuccessFul />;
+  }
+
+  if (confirm) {
+    return (
+      <ConfirmOrderDetails
+        close={() => setIsConfirm(false)}
+        showSuccessAnimation={DisplaySuccessAnimation}
+      />
+    );
+  }
+
   return (
     <div className="ease-in-out duration-700 overflow-none before:absolute inset-0 min-h-screen dark:bg-black dark:text-silver pb-8 signupPage">
       <RenderHeader heading={"Cart"} />

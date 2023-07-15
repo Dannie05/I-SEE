@@ -288,7 +288,7 @@ export default function SignUp() {
 
 
             {(isValid) ? (
-              <button className="my-3 focus:outline rounded-md focus:border-none relative pt-0 sign uppercase w-fit border-none sticky left-1/3 btn-success btn ease-in-out duration-500">
+              <button className="my-3 focus:outline rounded-md focus:border-none relative px-5 py-3 sign uppercase w-fit border-none self-center left-1/3 btn-success btn ease-in-out duration-500">
                 Sign Up
               </button>
             ) :
