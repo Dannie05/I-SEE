@@ -31,12 +31,10 @@ import Buy from "../../public/images/Buy.png";
 import Filter from "../../public/images/Filter.png";
 import Carousel from "../../components/carousel";
 import Link from "next/link";
-// import ModalPage from "../../components/modal";
-
 import microphone from "../../public/images/microphone.png";
 import { RenderModalHeader } from "../../components/modal";
 
-export default function Home({userInfo}:any) {
+export default function Home({ userInfo }: any) {
   const [isMobile, setIsMobile] = useState(false);
   const [activeNavLink, setActiveNavLink] = useState("Home");
   const [display, setDisplay] = useState("none");
@@ -44,6 +42,8 @@ export default function Home({userInfo}:any) {
   const [openModal, setOpenModal] = useState(false);
   const [source, setSource] = useState("");
   const [synth, setSynth] = useState(null);
+  const sizes = ["XM", "S", "M", "L", "XL"];
+  const [activeCircle, setActiveCircle] = useState("one");
 
   useEffect(() => {
     // Check if the viewport width is less than a certain threshold (e.g., 600px for mobile)
@@ -70,9 +70,8 @@ export default function Home({userInfo}:any) {
       const synth = window.speechSynthesis;
       setSynth(synth);
     }
-
   }, []);
-  
+
   const speakText = (text) => {
     if (synth && synth.speaking) {
       synth.cancel();
@@ -81,6 +80,16 @@ export default function Home({userInfo}:any) {
     const utterance = new SpeechSynthesisUtterance(text);
     synth.speak(utterance);
   };
+
+  function FilterBySize({ size }) {
+    return (
+      <div className="flex justify-evenly">
+        <button className="focus:text-black hover:bg-secondary-color border w-8 h-8 mx-1 rounded-sm">
+          {size}
+        </button>
+      </div>
+    );
+  }
 
   function RenderStock({
     imageSource,
@@ -182,17 +191,38 @@ export default function Home({userInfo}:any) {
         </Flex>
 
         <section className="grid grid-cols-3 pl-2 mt-4">
-          <button className={`w-[91px] h-[38px] shrink-0 ${productDisplay==="Trending"?"bg-secondary-color":"bg-transparent"} `}  onClick={()=>setProductDisplay("Trending")}>
+          <button
+            className={`w-[91px] h-[38px] shrink-0 ${
+              productDisplay === "Trending"
+                ? "bg-secondary-color"
+                : "bg-transparent"
+            } `}
+            onClick={() => setProductDisplay("Trending")}
+          >
             <Text className="text-center text-[18px] dark:text-white fontPoppins line-height-normal">
               Trending
             </Text>
           </button>
-          <button className={`w-fit -ml-3 px-1 h-[38px] shrink-0 ${productDisplay==="New Arrivals"?"bg-secondary-color":"bg-transparent"} `} onClick={()=>setProductDisplay("New Arrivals")}>
+          <button
+            className={`w-fit -ml-3 px-1 h-[38px] shrink-0 ${
+              productDisplay === "New Arrivals"
+                ? "bg-secondary-color"
+                : "bg-transparent"
+            } `}
+            onClick={() => setProductDisplay("New Arrivals")}
+          >
             <Text className="text-center text-[18px]  fontPoppins flex flex-row font-[400]">
               New Arrivals
             </Text>
           </button>
-          <button className={`w-[91px] h-[38px] shrink-0 ${productDisplay==="others"?"bg-secondary-color":"bg-transparent"} `} onClick={()=>setProductDisplay("others")}>
+          <button
+            className={`w-[91px] h-[38px] shrink-0 ${
+              productDisplay === "others"
+                ? "bg-secondary-color"
+                : "bg-transparent"
+            } `}
+            onClick={() => setProductDisplay("others")}
+          >
             <Text className="text-center text-[18px] fontPoppins line-height-normal">
               Others
             </Text>
@@ -267,38 +297,17 @@ export default function Home({userInfo}:any) {
     );
   }
 
-  function RenderFavorites() {
+  const Circle = ({ isActiveCircle }) => {
     return (
-      <>
-        <Text>hello</Text>
-      </>
+      <span
+      onClick={()=>setActiveCircle(isActiveCircle)}
+        className={`${
+          activeCircle == isActiveCircle ? "bg-[#031E2C]" : "bg-transparent"
+        }  rounded-full h-2.5 w-2.5 outline outline-[#031E2C] space-2 inline-block text-center`}
+      />
     );
-  }
-  function Settings() {
-    const settingsItems = [
-      { name: "Profile", route: "/profile" },
-      { name: "History", route: "/History" },
-      { name: "Log out", route: "/Settings" },
-    ];
-    return (
-      <>
-        <RenderHeader heading="Settings" />
-        <Flex className="justify-center min-h-[50vh] px-3 flex-col ">
-          {settingsItems.map(({ name, route }) => (
-            <div
-              key={name + route}
-              className="w-[330px] flex flex-row justify-between border-b border-b-[#333] my-4"
-            >
-              <p className="normalText flex self-end -mb-[3px] dark:text-white">
-                {name}
-              </p>
-              <FaChevronRight />
-            </div>
-          ))}
-        </Flex>
-      </>
-    );
-  }
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = React.useState("md");
 
@@ -342,6 +351,23 @@ export default function Home({userInfo}:any) {
             Soligen monologi. Mikroliga astroktiga. Homodölig. Liling sore.
             Soligen monologi. Mikroliga astroktiga. Homodölig. Liling sore.
           </Text>
+
+          <Flex className="flex-row items-center justify-between my-2">
+            <span className=" flex items-center justify-between pb-1 h-12">
+              {sizes.map((size, index) => (
+                <FilterBySize key={index} size={size} />
+              ))}
+            </span>
+            <div className="flex gap-x-2.5">
+              <Circle isActiveCircle="one" />
+              <Circle isActiveCircle="two"/>
+              <Circle isActiveCircle="three"/>
+            </div>
+          </Flex>
+
+          <div>
+            
+          </div>
         </section>
       </div>
     );

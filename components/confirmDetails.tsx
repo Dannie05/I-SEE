@@ -20,8 +20,7 @@ export default function ConfirmOrderDetails({ close, showSuccessAnimation }) {
     return (
       <div className="w-full items-center flex justify-center flex-col ">
         <h3
-          className="m
-        py-2 normalTextBolder text-left flex self-start"
+          className="py-2 normalTextBolder text-left flex self-start"
         >
           {placeholder}
         </h3>
