@@ -5,18 +5,26 @@ import apple from "../public/images/apple.png";
 import google from "../public/images/google.png";
 import line from "../public/images/line.png";
 import Link from "next/link";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
 import { Text, useToast } from "@chakra-ui/react";
 import { BsApple, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const SignUp = () => {
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [isEmail, setIsEmail] = useState<boolean | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [agreedToTerms,setAgreedToTerms]=useState("none");
+  const [synth, setSynth] = useState(null);
+  const [recognition, setRecognition] = useState(null);
+  const [isListening, setIsListening] = useState(false);
+
   const [ref_data, setRefDAta] = useState<{
     exists: boolean | null;
     name: null | string;
@@ -26,13 +34,12 @@ const SignUp = () => {
     email: "",
     password: "",
     re_password: "",
-
-    // first_name: "",
-    // last_name: "",
-    // phone: "",    
-    // username: "",
-    // country: "",
-    // address: "",
+    first_name: "",
+    last_name: "",
+    phone: "",    
+    username: "",
+    country: "",
+    address: "",
   });
 
   const toggleShowPassword = () => {
@@ -42,24 +49,7 @@ const SignUp = () => {
     const { value, name } = target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  // const getReferal = async ({
-  //   target,
-  // }: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value } = target;
-  //   if (value.length > 3) {
-  //     try {
-  //       const response = await axios.get<{
-  //         exists: boolean | null;
-  //         name: string | null;
-  //       }>(`/api/user/get-referal?username=${value.toLowerCase()}`);
-  //       setRefDAta(response.data);
-  //     } catch (error) {
-  //       setRefDAta(null);
-  //     }
-  //   } else {
-  //     setRefDAta(null);
-  //   }
-  // };
+   
   const checkEmail = async ({
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +84,7 @@ const SignUp = () => {
   //     setIsValid(false);
   //   }
   // };
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.post("/api/create", formData);
@@ -144,9 +135,55 @@ const SignUp = () => {
     }
   };
 
+  const [message, setMessage] = useState("");
+  const commands = [
+    {
+      command: "reset",
+      callback: () => resetTranscript(),
+    },
+    {
+      command: "shut up",
+      callback: () => setMessage("I wasn't talking."),
+    },
+    {
+      command: "Hello",
+      callback: () => setMessage("Hi there!"),
+    },
+  ];
+  const {
+    transcript,
+    interimTranscript,
+    finalTranscript,
+    resetTranscript,
+    listening,
+  } = useSpeechRecognition({ commands });
+
+  useEffect(() => {
+    if (finalTranscript !== "") {
+      console.log("Got final result:", finalTranscript);
+    }
+  }, [interimTranscript, finalTranscript]);
+  
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log(
+      "Your browser does not support speech recognition software! Try Chrome desktop, maybe?"
+    );
+  }
+  const listenContinuously = () => {
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: "en-GB",
+    });
+  };
+
+
   return (
     <div className="flex items-center justify-center min-h-screen  ">
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded pt-6 pb-8 mb-4 md:px-12 px-5 mx-5 sm:w-1/2 md:w-1/3 min-w-full">
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded pt-6 pb-8 mb-4 md:px-12 px-5 mx-5 sm:w-1/2 md:w-1/3 max-sm:min-w-full">
         <div className="mb-4">
           <h2 className="text-center font-bold mb-4">SIGN UP</h2>
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -174,6 +211,25 @@ const SignUp = () => {
               height={150}
               src={microphone}
               alt=""
+              onClick={async () => {
+                await resetTranscript();
+                await listenContinuously();
+                  toast({
+                    title: 'listening',
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: false,
+                    position: "top",
+                    size: { width: '300', height: '200' },
+                    variant: 'top-accent'
+                  });
+                formData.email = transcript;
+                console.log(transcript);
+                // setTimeout(() => {
+                //   resetTranscript();
+                //   SpeechRecognition.stopListening();
+                // }, 10000);
+              }}
               className="h-5 w-5 text-gray-400 ml-2"
             />
           </div>
@@ -201,8 +257,24 @@ const SignUp = () => {
               src={microphone}
               alt=""
               className="h-5 w-5 text-gray-400 ml-2"
+              onClick={async () => {
+                await resetTranscript();
+                await listenContinuously();
+                  toast({
+                    title: 'listening',
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: false,
+                    position: "top",
+                    size: { width: '300', height: '200' },
+                    variant: 'top-accent'
+                  });
+                formData.password = transcript;
+                console.log(transcript);
+              }}
             />
           </div>
+          <></>
         </div>
 
         <div className="mb-4">
@@ -228,6 +300,21 @@ const SignUp = () => {
               src={microphone}
               alt=""
               className="h-5 w-5 text-gray-400 ml-2"
+              onClick={async () => {
+                await resetTranscript();
+                await listenContinuously();
+                  toast({
+                    title: 'listening',
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: false,
+                    position: "top",
+                    size: { width: '300', height: '200' },
+                    variant: 'top-accent'
+                  });
+                formData.re_password = transcript;
+                console.log(transcript);
+              }}
             />
           </div>
         </div>
@@ -236,7 +323,7 @@ const SignUp = () => {
         </div>
         <div className="flex items-center justify-between mt-5">
           <div className="flex items-center">
-          <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+          <input required id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
             <label className="ml-2 text-gray-700">
               I agree to the{" "}
               <span className="text-[#138808]"> Terms & Conditions </span> and{" "}
