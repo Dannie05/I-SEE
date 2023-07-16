@@ -23,7 +23,7 @@ const create = async (req: NextApiRequest, res: NextApiResponse) => {
                     lastName:data.last_name,
                     password: data.password,
                     balance: 0,
-                    username: data.username||"",
+                    username: data.email,
                     phone: data.phone,
                     country:data.country,
                     address:data.address,

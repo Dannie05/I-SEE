@@ -189,7 +189,7 @@ const SignUp = () => {
         <div className="mb-4">
           <h2 className="text-center font-bold mb-4">SIGN UP</h2>
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Name
+            Email
           </label>
           <div className="relative flex items-center">
             <input
