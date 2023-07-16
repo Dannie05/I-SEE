@@ -5,7 +5,7 @@ import apple from "../public/images/apple.png";
 import google from "../public/images/google.png";
 import line from "../public/images/line.png";
 import Link from "next/link";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
@@ -20,7 +20,7 @@ const SignUp = () => {
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [isEmail, setIsEmail] = useState<boolean | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [agreedToTerms,setAgreedToTerms]=useState("none");
+  const [agreedToTerms, setAgreedToTerms] = useState("none");
   const [synth, setSynth] = useState(null);
   const [recognition, setRecognition] = useState(null);
   const [isListening, setIsListening] = useState(false);
@@ -36,7 +36,7 @@ const SignUp = () => {
     re_password: "",
     first_name: "",
     last_name: "",
-    phone: "",    
+    phone: "",
     username: "",
     country: "",
     address: "",
@@ -49,7 +49,7 @@ const SignUp = () => {
     const { value, name } = target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-   
+
   const checkEmail = async ({
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +84,7 @@ const SignUp = () => {
   //     setIsValid(false);
   //   }
   // };
- 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.post("/api/create", formData);
@@ -163,7 +163,7 @@ const SignUp = () => {
       console.log("Got final result:", finalTranscript);
     }
   }, [interimTranscript, finalTranscript]);
-  
+
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return null;
   }
@@ -180,10 +180,12 @@ const SignUp = () => {
     });
   };
 
-
   return (
     <div className="flex items-center justify-center min-h-screen  ">
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded pt-6 pb-8 mb-4 md:px-12 px-5 mx-5 sm:w-1/2 md:w-1/3 max-sm:min-w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded pt-6 pb-8 mb-4 md:px-12 px-5 mx-5 sm:w-1/2 md:w-1/3 max-sm:min-w-full"
+      >
         <div className="mb-4">
           <h2 className="text-center font-bold mb-4">SIGN UP</h2>
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -214,15 +216,15 @@ const SignUp = () => {
               onClick={async () => {
                 await resetTranscript();
                 await listenContinuously();
-                  toast({
-                    title: 'listening',
-                    status: 'success',
-                    duration: 2000,
-                    isClosable: false,
-                    position: "top",
-                    size: { width: '300', height: '200' },
-                    variant: 'top-accent'
-                  });
+                toast({
+                  title: "listening",
+                  status: "success",
+                  duration: 2000,
+                  isClosable: false,
+                  position: "top",
+                  size: { width: "300", height: "200" },
+                  variant: "top-accent",
+                });
                 formData.email = transcript;
                 console.log(transcript);
                 // setTimeout(() => {
@@ -260,15 +262,15 @@ const SignUp = () => {
               onClick={async () => {
                 await resetTranscript();
                 await listenContinuously();
-                  toast({
-                    title: 'listening',
-                    status: 'success',
-                    duration: 2000,
-                    isClosable: false,
-                    position: "top",
-                    size: { width: '300', height: '200' },
-                    variant: 'top-accent'
-                  });
+                toast({
+                  title: "listening",
+                  status: "success",
+                  duration: 2000,
+                  isClosable: false,
+                  position: "top",
+                  size: { width: "300", height: "200" },
+                  variant: "top-accent",
+                });
                 formData.password = transcript;
                 console.log(transcript);
               }}
@@ -303,15 +305,15 @@ const SignUp = () => {
               onClick={async () => {
                 await resetTranscript();
                 await listenContinuously();
-                  toast({
-                    title: 'listening',
-                    status: 'success',
-                    duration: 2000,
-                    isClosable: false,
-                    position: "top",
-                    size: { width: '300', height: '200' },
-                    variant: 'top-accent'
-                  });
+                toast({
+                  title: "listening",
+                  status: "success",
+                  duration: 2000,
+                  isClosable: false,
+                  position: "top",
+                  size: { width: "300", height: "200" },
+                  variant: "top-accent",
+                });
                 formData.re_password = transcript;
                 console.log(transcript);
               }}
@@ -323,7 +325,13 @@ const SignUp = () => {
         </div>
         <div className="flex items-center justify-between mt-5">
           <div className="flex items-center">
-          <input required id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            <input
+              required
+              id="link-checkbox"
+              type="checkbox"
+              value=""
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
             <label className="ml-2 text-gray-700">
               I agree to the{" "}
               <span className="text-[#138808]"> Terms & Conditions </span> and{" "}
@@ -332,15 +340,14 @@ const SignUp = () => {
           </div>
         </div>
         <div className="flex items-center justify-center my-3  min-w-full">
-        <button
-              type="submit"
-              className="uppercase btn btn-sm border bg-secondary-color cursor-pointer  my-1.5 active:opacity-0 normalTextBolder rounded-lg w-full py-2 text-medium text-base"
-              style={{ letterSpacing: 1, backgroundColor: "#6CB564" }}
-            >
-              Create account
-            </button>
+          <button
+            type="submit"
+            className="uppercase btn btn-sm border bg-secondary-color cursor-pointer  my-1.5 active:opacity-0 normalTextBolder rounded-lg w-full py-2 text-medium text-base"
+            style={{ letterSpacing: 1, backgroundColor: "#6CB564" }}
+          >
+            Create account
+          </button>
         </div>
- 
 
         <div className="flex justify-evenly mt-5 mb-3">
           <p className="pt-3">
@@ -348,7 +355,7 @@ const SignUp = () => {
               width={200}
               height={150}
               src={line}
-              alt=""
+              alt="line"
               className="pb-3"
             />
           </p>
@@ -362,18 +369,25 @@ const SignUp = () => {
             <Image width={50} height={50} src={apple} alt="" className="pb-3" />
           </p>
           <p>
-            <Image width={50} height={50} src={google} alt="" />
+            <Image
+              width={50}
+              height={50}
+              src={google}
+              alt="google sign in "
+              onClick={() => {
+                signIn("google", { callbackUrl: "/dashboard" });
+              }}
+            />
           </p>
         </div>
         <div>
           <p>
-            Don&apos;t have an account?
-            <span className="text-[#138808] font-bold text-[16px]">
-              Sign Up
-            </span>{" "}
+           Have an account?
+            <Link href="/login" className="text-[#6CB564] font-bold text-[16px] normalTextBolder">
+              Sign in
+            </Link>
           </p>
         </div>
-      
       </form>
     </div>
   );
