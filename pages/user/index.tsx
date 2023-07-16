@@ -111,7 +111,7 @@ export default function Home({ userInfo }: any) {
             height: height,
             padding: 29,
             // width: width,
-            width:"45vw",
+            width: "45vw",
             backgroundImage: `url(/assets/${imageSource})`,
           }}
 
@@ -159,13 +159,15 @@ export default function Home({ userInfo }: any) {
               className="h-12 bg-secondary-color w-12 rounded-full p-2.5 shrink-0 text-gray-400 ml-2 cursor-pointer"
             />
           </Link>
-          <Image
-            width={50}
-            height={50}
-            src={Profile}
-            alt=""
-            className="h-12 w-12 shrink-0 text-gray-400 ml-2 cursor-pointer"
-          />
+          <Link href={"/profile"}>
+            <Image
+              width={50}
+              height={50}
+              src={Profile}
+              alt=""
+              className="h-12 w-12 shrink-0 text-gray-400 ml-2 cursor-pointer"
+            />
+          </Link>
         </div>
       </Flex>
     );
@@ -179,6 +181,7 @@ export default function Home({ userInfo }: any) {
         <Flex className="mx-6 my-2.5 self-center">
           <input
             type="search"
+            placeholder="search"
             className="w-[75vw] h-[41px] shrink-0 rounded-[180px] border border-[#090909]"
           />
           <Image
@@ -301,7 +304,7 @@ export default function Home({ userInfo }: any) {
   const Circle = ({ isActiveCircle }) => {
     return (
       <span
-      onClick={()=>setActiveCircle(isActiveCircle)}
+        onClick={() => setActiveCircle(isActiveCircle)}
         className={`${
           activeCircle == isActiveCircle ? "bg-[#031E2C]" : "bg-transparent"
         }  rounded-full h-2.5 w-2.5 outline outline-[#031E2C] space-2 inline-block text-center`}
@@ -361,14 +364,12 @@ export default function Home({ userInfo }: any) {
             </span>
             <div className="flex gap-x-2.5">
               <Circle isActiveCircle="one" />
-              <Circle isActiveCircle="two"/>
-              <Circle isActiveCircle="three"/>
+              <Circle isActiveCircle="two" />
+              <Circle isActiveCircle="three" />
             </div>
           </Flex>
 
-          <div>
-            
-          </div>
+          <div></div>
         </section>
       </div>
     );

@@ -177,7 +177,7 @@ export default function FilterPage({ onPressFunc }) {
 
         {/*========================================== Price Slider =========================================*/}
         <div>
-          <Text className="normalText">Price</Text>
+          <Text className="normalText mt-2 -mb-1.5">Price</Text>
           <PriceSlider/>
         </div>
         {/*========================================== Price Slider =========================================*/}
