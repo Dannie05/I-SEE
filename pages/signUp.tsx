@@ -367,7 +367,7 @@ const SignUp = () => {
         </div>
         <div>
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?
             <span className="text-[#138808] font-bold text-[16px]">
               Sign Up
             </span>{" "}
