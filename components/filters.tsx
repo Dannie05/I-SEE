@@ -115,7 +115,7 @@ export default function FilterPage({ onPressFunc }) {
   
 
   return (
-    <div className="dark:bg-black overflow-y-scroll dark:text-silver  ease-in-out duration-1000 min-h-screen pb-28 pt-4 ">
+    <div className="dark:bg-black dark:text-silver  ease-in-out duration-1000 min-h-screen pb-28 pt-4 ">
       <Navigation />
       <FaChevronLeft
         size={20}

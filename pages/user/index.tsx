@@ -33,10 +33,14 @@ import Carousel from "../../components/carousel";
 import Link from "next/link";
 import microphone from "../../public/images/microphone.png";
 import { RenderModalHeader } from "../../components/modal";
+import { TbMinus, TbPlus } from "react-icons/tb";
+import Loading from "../../components/loading";
+import SuccessFul from "../../components/success";
+import ConfirmOrderDetails from "../../components/confirmDetails";
 
 export default function Home({ userInfo }: any) {
   const [isMobile, setIsMobile] = useState(false);
-  const [activeNavLink, setActiveNavLink] = useState("Home");
+  const [activeNavLink, setActiveNavLink] = useState("H../ome");
   const [display, setDisplay] = useState("none");
   const [productDisplay, setProductDisplay] = useState("Trending");
   const [openModal, setOpenModal] = useState(false);
@@ -44,6 +48,9 @@ export default function Home({ userInfo }: any) {
   const [synth, setSynth] = useState(null);
   const sizes = ["XM", "S", "M", "L", "XL"];
   const [activeCircle, setActiveCircle] = useState("one");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [confirm, setIsConfirm] = useState(false);
 
   useEffect(() => {
     // Check if the viewport width is less than a certain threshold (e.g., 600px for mobile)
@@ -64,6 +71,8 @@ export default function Home({ userInfo }: any) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const [numberOfOrderedItems, setNumberOfOrderedItems] = useState<number>(1);
 
   useEffect(() => {
     if ("speechSynthesis" in window) {
@@ -181,7 +190,6 @@ export default function Home({ userInfo }: any) {
         <Flex className="mx-6 my-2.5 self-center">
           <input
             type="search"
-            placeholder="search"
             className="w-[75vw] h-[41px] shrink-0 rounded-[180px] border border-[#090909]"
           />
           <Image
@@ -322,7 +330,7 @@ export default function Home({ userInfo }: any) {
 
   function ModalPage() {
     return (
-      <div className="dark:bg-black overflow-y-scroll dark:text-silver min-w-screen ease-in-out duration-1000 min-h-screen pb-32">
+      <div className="dark:bg-black dark:text-silver min-w-screen ease-in-out duration-1000 min-h-screen pb-8">
         {/* <Image
        width= {428}
        height= {491}
@@ -369,9 +377,70 @@ export default function Home({ userInfo }: any) {
             </div>
           </Flex>
 
-          <div></div>
+          <Flex w={"40vw"} direction={"row"} className="gap-x-3 items-center">
+            <button
+              className="btn btn-outline-success"
+              onClick={() => setNumberOfOrderedItems(numberOfOrderedItems + 1)}
+            >
+              <TbPlus />
+            </button>
+            <p className="text-center pt-2.5">{numberOfOrderedItems}</p>
+            <button
+              className="btn btn-outline-danger rounded-none"
+              onClick={() => setNumberOfOrderedItems(numberOfOrderedItems - 1)}
+            >
+              <TbMinus />
+            </button>
+          </Flex>
+          <div className="flex items-center justify-center mt-4 ">
+            <button
+              onClick={DisplayLoadingAnimation}
+              className="bg-secondary-color w-1/2 h-8 rounded-sm normalTextBolder text-white"
+            >
+              Buy Now
+            </button>
+          </div>
         </section>
       </div>
+    );
+  }
+
+  function DisplayLoadingAnimation() {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
+    setIsConfirm(true);
+  }
+
+  function DisplaySuccessAnimation() {
+    setIsSuccessful(true);
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isSuccessful) {
+    return (
+      <SuccessFul
+        stopAnimation={() => {
+          Router.reload();
+          setIsSuccessful(false);
+        }}
+      />
+    )
+  }
+
+  if (confirm) {
+    return (
+      <ConfirmOrderDetails
+        close={() => setIsConfirm(false)}
+        showSuccessAnimation={(e) => {
+          e.preventDefault();
+          DisplaySuccessAnimation();
+        }}
+      />
     );
   }
 
@@ -385,16 +454,7 @@ export default function Home({ userInfo }: any) {
   return (
     <div className="dark:bg-black  dark:text-silver  ease-in-out duration-1000 min-h-screen pb-14">
       <Navigation />
-
       <RenderHome />
-      {/* {activeNavLink==="Home"&&(
-          )}
-          {activeNavLink==="Favorites"&&(
-            <RenderFavorites/>
-          )}
-          {activeNavLink==="Settings"&&(
-            <Settings/>
-          )} */}
     </div>
   );
 }

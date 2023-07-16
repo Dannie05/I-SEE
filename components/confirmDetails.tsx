@@ -45,7 +45,7 @@ export default function ConfirmOrderDetails({ close, showSuccessAnimation }) {
           placeholder="Delivery Address"
           type="text"
         />
-        <RenderInput name="phone" placeholder="Phone Number" type="text" />
+        <RenderInput name="phone" placeholder="Phone Number" type="tel" />
 
         <span className="flex item-center justify-center w-full">
           <button

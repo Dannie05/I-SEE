@@ -40,7 +40,7 @@ const Navigation = () => {
                 className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
               >
                 <svg
-                  className={`w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500 ${
+                  className={`w-6 h-6 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500 ${
                     activeNavLink === "Home"
                       ? "text-primary-color"
                       : "text-gray-500"
@@ -58,10 +58,11 @@ const Navigation = () => {
               href="/favorites"
                 type="button"
                 onClick={() => setActiveNavLink("Favorites")}
-                className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 dark:hover:bg-gray-800 group"
               >
                 
-                  <Image src={"/images/Heart.png"} width={30} height={30} alt="" className="-mt-3 "/>
+                  <Image src={"/images/Heart.png"} width={40} height={30} alt="" className="-mt-3 w-5 "/>
+                  {/* <FaHeart size={30} fontWeight={700}/> */}
                 {/* <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">Wallet</span> */}
               </Link>
               <Link
