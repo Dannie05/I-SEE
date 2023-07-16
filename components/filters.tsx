@@ -61,10 +61,10 @@ export default function FilterPage({ onPressFunc }) {
 
   function FilterByColor({ color }) {
     return (
-      <div className="my-2.5">
-        <Button variant="outline" colorScheme={color}  bg={color} className={`w-4 h-4`} onClick={()=>console.log(color)}>
+      <div className="my-2.5 ml-1.5">
+        <button style={{background:color}}   className={`w-5 h-5`} onClick={()=>console.log(color)}>
           {/* {color} */}
-        </Button>
+        </button>
       </div>
     );
   }
@@ -85,11 +85,11 @@ export default function FilterPage({ onPressFunc }) {
             {/* 25% */}
             cheap
           </SliderMark>
-          <SliderMark value={50} {...labelStyles}>
+          <SliderMark value={45} {...labelStyles}>
             {/* 50% */}
             moderate
           </SliderMark>
-          <SliderMark value={90} {...labelStyles}>
+          <SliderMark value={85} {...labelStyles}>
             {/* 75% */}
             expensive
           </SliderMark>

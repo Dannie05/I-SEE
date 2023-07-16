@@ -101,7 +101,7 @@ export default function Home({ userInfo }: any) {
     return (
       <div className="max-w-[180px] p-1 ">
         <div
-          className="bg-no-repeat bg-cover bg-center"
+          className="bg-no-repeat bg-cover bg-center items-center flex justify-center md:min-h-[12v]"
           onClick={() => {
             setSource(imageSource);
             setOpenModal(true);
@@ -110,7 +110,8 @@ export default function Home({ userInfo }: any) {
           style={{
             height: height,
             padding: 29,
-            width: width,
+            // width: width,
+            width:"45vw",
             backgroundImage: `url(/assets/${imageSource})`,
           }}
 
@@ -120,7 +121,7 @@ export default function Home({ userInfo }: any) {
         />
         <Flex className="flex-row justify-between">
           <span>
-            <h2 className="fontPoppinsBold font-[700] text-[14px] text-center">
+            <h2 className="fontPoppinsBold font-[700] text-[14px]">
               {productDetail}
             </h2>
             <p
@@ -229,7 +230,7 @@ export default function Home({ userInfo }: any) {
           </button>
         </section>
 
-        <main className="grid grid-cols-2 mt-4">
+        <main className="grid grid-cols-2 mt-4 flex-1 w-full">
           <RenderStock
             imageSource="blouse.png"
             width="180px"
