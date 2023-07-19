@@ -13,6 +13,8 @@ const UserSchema: Schema = new Schema({
     balance: { type: Number },
     country:{type:String,required:false},
     address:{type:String,required:false},
+    resetToken: { type: String },
+    resetTokenExpiration: { type: Date },
 });
 try {
 

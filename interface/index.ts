@@ -17,6 +17,8 @@ export interface IUser extends Document {
     cummulative_pv?: number;
     current_month_pv?: number;
     account_type?: string;
+    resetTokenExpiration?:Date,
+    resetToken?:string,
     referals?: Array<string>;
 
 }

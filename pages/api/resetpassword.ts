@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { sendPasswordResetEmail } from "../../lib/email";
 import crypto from "crypto";
 
-export default async function resetPassword(req:NextApiRequest, res:NextApiResponse) {
+export default async function resetpassword(req:NextApiRequest, res:NextApiResponse) {
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method not allowed" });
     return;
@@ -45,6 +45,6 @@ export default async function resetPassword(req:NextApiRequest, res:NextApiRespo
     res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error",error });
   }
 }
