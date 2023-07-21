@@ -53,6 +53,10 @@ export default function Home({ userInfo }: any) {
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [confirm, setIsConfirm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterCriteria, setFilterCriteria] = useState(null); // Track the selected filter criteria
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+
 
 
   let dummyText =
@@ -78,6 +82,32 @@ export default function Home({ userInfo }: any) {
     };
   }, []);
 
+  useEffect(() => {
+    // Apply filtering whenever the filter criteria change
+    if (filterCriteria) {
+      const { brand, size, color, price } = filterCriteria;
+      let filtered = products;
+
+      if (brand) {
+        filtered = filtered.filter((product) => product.brand === brand);
+      }
+
+      if (size) {
+        filtered = filtered.filter((product) => product.size === size);
+      }
+
+      if (color) {
+        filtered = filtered.filter((product) => product.color === color);
+      }
+
+      if (price) {
+        filtered = filtered.filter((product) => product.price <= price);
+      }
+
+      setFilteredProducts(filtered);
+    }
+  }, [filterCriteria]);
+
   const [numberOfOrderedItems, setNumberOfOrderedItems] = useState<number>(1);
 
   useEffect(() => {
@@ -95,9 +125,9 @@ export default function Home({ userInfo }: any) {
     const utterance = new SpeechSynthesisUtterance(text);
     synth.speak(utterance);
   };
-  const filteredProducts = products.filter((product) =>
-    product.productDetail.toLowerCase().includes(searchQuery.toLowerCase())||product.price.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredProducts = products.filter((product) =>
+  //   product.productDetail.toLowerCase().includes(searchQuery.toLowerCase())||product.price.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
   function FilterBySize({ size }) {
     return (
       <div className="flex justify-evenly">
@@ -502,7 +532,7 @@ export default function Home({ userInfo }: any) {
   }
 
   if (display == "filter") {
-    return <FilterPage onPressFunc={() => setDisplay("none")} />;
+    return <FilterPage onPressFunc={() => setDisplay("none")} setFilterCriteria={setFilterCriteria} />;
   }
   if (openModal) {
     return <ModalPage />;

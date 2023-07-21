@@ -17,7 +17,14 @@ import {
 
 export const sizes = ["XM", "S", "M", "L", "XL"];
 
-export default function FilterPage({ onPressFunc }) {
+
+
+export default function FilterPage({ onPressFunc, setFilterCriteria  }) {
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState(50);
+
   function FilterByBrandCheckList({ brand }) {
     return (
       <div className="my-2 ml-1">
@@ -27,6 +34,7 @@ export default function FilterPage({ onPressFunc }) {
             type="checkbox"
             value=""
             className="w-4 h-4 text-secondary-color bg-primary-color border-gray-300 rounded focus:ring-primary-color dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            onClick={()=>{setSelectedBrand(brand)}}
           />
           <label
             htmlFor="link-checkbox"
@@ -61,6 +69,7 @@ export default function FilterPage({ onPressFunc }) {
         <Button
           variant="outline"
           className="focus:text-black hover:bg-secondary-color"
+          onClick={()=>setSelectedSize(size)}
         >
           {size}
         </Button>
@@ -74,7 +83,7 @@ export default function FilterPage({ onPressFunc }) {
         <button
           style={{ background: color }}
           className={`w-5 h-5`}
-          onClick={() => console.log(color)}
+          onClick={() => {console.log(color); setSelectedColor(color)}}
         >
           {/* {color} */}
         </button>
@@ -136,9 +145,10 @@ export default function FilterPage({ onPressFunc }) {
       brand: selectedBrand,
       size: selectedSize,
       color: selectedColor,
-      price: selectedPrice,
+      // price: selectedPrice,
     };
     setFilterCriteria(filterCriteria);
+    console.log(filterCriteria)
     onPressFunc();
   }
 
@@ -212,6 +222,8 @@ export default function FilterPage({ onPressFunc }) {
         <div className="flex items-center justify-center mt-4">
           <button
             className="bg-secondary-color h-10 tracking-[0.7] my-2 w-1/2 rounded-sm normalTextBolder text-white"
+            onClick={handleGenerate}
+
           >
             Generate
           </button>
