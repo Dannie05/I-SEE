@@ -53,9 +53,35 @@ export default function Settings() {
   //   }
   // }
 
+  const [synth, setSynth] = useState(null);
+
+  useEffect(() => {
+    if ("speechSynthesis" in window) {
+      const synth = window.speechSynthesis;
+      setSynth(synth);
+    }
+  }, []);
+
+  const speakText = (text) => {
+    if (synth && synth.speaking) {
+      synth.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    synth.speak(utterance);
+  };
+
   const settingsItems = [
-    { name: "Profile", route: "/profile" },
-    { name: "History", route: "/history" },
+    {
+      name: "Profile",
+      route: "/profile",
+      speak: `profile link clicked redirecting to profile `,
+    },
+    {
+      name: "History",
+      route: "/history",
+      speak: `History link clicked redirecting to History `,
+    },
   ];
   return (
     <div className="dark:bg-black overflow-y-scroll dark:text-silver  ease-in-out duration-1000 min-h-screen pb-14">
@@ -63,7 +89,7 @@ export default function Settings() {
       <RenderHeader heading="Settings" />
 
       <Flex className="justify-center min-h-[50vh] pl-2 self-center flex-col ">
-        {settingsItems.map(({ name, route }) => (
+        {settingsItems.map(({ name, route, speak }) => (
           <div
             key={name + route}
             className="w-[340px] flex flex-row justify-between border-b border-b-[#333] my-4"
@@ -71,6 +97,7 @@ export default function Settings() {
             <Link
               href={route}
               className="normalText flex self-end -mb-[3px] dark:text-white hover:text-secondary-color hover:dark:text-secondary-color"
+              onClick={() => speakText(speak)}
             >
               {name}
             </Link>
@@ -80,7 +107,10 @@ export default function Settings() {
         <div className="w-[340px] flex flex-row justify-between border-b border-b-[#333] my-4">
           <p
             className="normalText flex self-end -mb-[3px] dark:text-white hover:text-secondary-color hover:dark:text-secondary-color"
-            onClick={()=>signOut()}
+            onClick={() => {
+              signOut();
+              speakText("logging out");
+            }}
           >
             {"Log Out"}
           </p>

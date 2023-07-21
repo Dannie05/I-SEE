@@ -1,13 +1,22 @@
-import {useState} from "react"
+import { useState } from "react";
 import Navigation from "./navigation";
 import RenderHeader from "./renderHeader";
 import { FaChevronLeft } from "react-icons/fa";
 import microphone from "../public/images/microphone.png";
 import Image from "next/image";
-import { Text, Button, Box, Slider, SliderMark,SliderTrack, SliderThumb,SliderFilledTrack } from "@chakra-ui/react";
+import {
+  Text,
+  Button,
+  Box,
+  Slider,
+  SliderMark,
+  SliderTrack,
+  SliderThumb,
+  SliderFilledTrack,
+} from "@chakra-ui/react";
 
- export const sizes = ["XM", "S", "M", "L", "XL"];
- 
+export const sizes = ["XM", "S", "M", "L", "XL"];
+
 export default function FilterPage({ onPressFunc }) {
   function FilterByBrandCheckList({ brand }) {
     return (
@@ -30,20 +39,20 @@ export default function FilterPage({ onPressFunc }) {
     );
   }
 
-    const colors = [
-        "#fff",
-        "#200E32",
-        "#635BFF",
-        "#F8A8AB",
-        "#490055",
-        "#105F39",
-        "#2521EE",
-        "#3D2C00",
-        "#D017EE",
-        "#20ECA3",
-        "#F8BD00",
-        "#E33629",
-    ];
+  const colors = [
+    "#fff",
+    "#200E32",
+    "#635BFF",
+    "#F8A8AB",
+    "#490055",
+    "#105F39",
+    "#2521EE",
+    "#3D2C00",
+    "#D017EE",
+    "#20ECA3",
+    "#F8BD00",
+    "#E33629",
+  ];
   const brandNames = ["H&M", "Gucci", "Prada", "Levi's", "Zara", "Hermes"];
 
   function FilterBySize({ size }) {
@@ -62,7 +71,11 @@ export default function FilterPage({ onPressFunc }) {
   function FilterByColor({ color }) {
     return (
       <div className="my-2.5 ml-1.5">
-        <button style={{background:color}}   className={`w-5 h-5`} onClick={()=>console.log(color)}>
+        <button
+          style={{ background: color }}
+          className={`w-5 h-5`}
+          onClick={() => console.log(color)}
+        >
           {/* {color} */}
         </button>
       </div>
@@ -70,17 +83,22 @@ export default function FilterPage({ onPressFunc }) {
   }
 
   function PriceSlider() {
-    const [sliderValue, setSliderValue] = useState(50)
-  
+    const [sliderValue, setSliderValue] = useState(50);
+
     const labelStyles = {
-      mt: '2',
-      ml: '-2.5',
-      fontSize: 'sm',
-    }
-  
+      mt: "2",
+      ml: "-2.5",
+      fontSize: "sm",
+    };
+
     return (
       <Box pt={6} pb={2}>
-        <Slider colorScheme="green" aria-label='slider-ex-6' onChange={(val) => setSliderValue(val)} onChangeEnd={(val) => console.log(val)}>
+        <Slider
+          colorScheme="green"
+          aria-label="slider-ex-6"
+          onChange={(val) => setSliderValue(val)}
+          onChangeEnd={(val) => console.log(val)}
+        >
           <SliderMark value={5} {...labelStyles}>
             {/* 25% */}
             cheap
@@ -110,9 +128,8 @@ export default function FilterPage({ onPressFunc }) {
           <SliderThumb />
         </Slider>
       </Box>
-    )
+    );
   }
-  
 
   return (
     <div className="dark:bg-black dark:text-silver  ease-in-out duration-1000 min-h-screen pb-28 pt-4 ">
@@ -147,10 +164,10 @@ export default function FilterPage({ onPressFunc }) {
           />
         </div>
 
-        <div className="grid grid-cols-2 mt-4">          
-            {brandNames.map((brand, index) => (
-              <FilterByBrandCheckList key={index} brand={brand} />
-            ))}
+        <div className="grid grid-cols-2 mt-4">
+          {brandNames.map((brand, index) => (
+            <FilterByBrandCheckList key={index} brand={brand} />
+          ))}
         </div>
 
         {/*========================================== size =========================================*/}
@@ -177,10 +194,17 @@ export default function FilterPage({ onPressFunc }) {
 
         {/*========================================== Price Slider =========================================*/}
         <div>
-          <Text className="normalText mt-2 -mb-1.5">Price</Text>
-          <PriceSlider/>
+          <Text className="normalText mt-2">Price</Text>
+          <PriceSlider />
         </div>
         {/*========================================== Price Slider =========================================*/}
+        <div className="flex items-center justify-center mt-4">
+          <button
+            className="bg-secondary-color h-10 tracking-[0.7] my-2 w-1/2 rounded-sm normalTextBolder text-white"
+          >
+            Generate
+          </button>
+        </div>
       </section>
     </div>
   );

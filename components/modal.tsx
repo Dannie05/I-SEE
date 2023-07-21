@@ -1,10 +1,30 @@
-import React from "react"
+import React,{useState,useEffect} from "react"
 import { Text, Button, Flex, HStack,useDisclosure,Modal,ModalOverlay,ModalContent, ModalHeader,ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 
 export const RenderModalHeader = ({closeModalProp}) => {
+
+  const [synth, setSynth] = useState(null);
+
+  useEffect(() => {
+    if ("speechSynthesis" in window) {
+      const synth = window.speechSynthesis;
+      setSynth(synth);
+    }
+  }, []);
+
+  const speakText = (text) => {
+    if (synth && synth.speaking) {
+      synth.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    synth.speak(utterance);
+  };
+
+
   return(
   <Flex className="justify-between px-3 pt-6">
       <FaArrowLeft size={20} fontWeight={400} className="mt-2" onClick={closeModalProp}/>

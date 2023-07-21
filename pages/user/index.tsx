@@ -37,10 +37,11 @@ import { TbMinus, TbPlus } from "react-icons/tb";
 import Loading from "../../components/loading";
 import SuccessFul from "../../components/success";
 import ConfirmOrderDetails from "../../components/confirmDetails";
+import products from "../../data/products";
 
 export default function Home({ userInfo }: any) {
   const [isMobile, setIsMobile] = useState(false);
-  const [activeNavLink, setActiveNavLink] = useState("H../ome");
+  const [activeNavLink, setActiveNavLink] = useState("Home");
   const [display, setDisplay] = useState("none");
   const [productDisplay, setProductDisplay] = useState("Trending");
   const [openModal, setOpenModal] = useState(false);
@@ -51,6 +52,11 @@ export default function Home({ userInfo }: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [confirm, setIsConfirm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+
+  let dummyText =
+    "Soligen monologi. Mikroliga astroktiga. Homodölig. Liling sore";
 
   useEffect(() => {
     // Check if the viewport width is less than a certain threshold (e.g., 600px for mobile)
@@ -89,11 +95,20 @@ export default function Home({ userInfo }: any) {
     const utterance = new SpeechSynthesisUtterance(text);
     synth.speak(utterance);
   };
-
+  const filteredProducts = products.filter((product) =>
+    product.productDetail.toLowerCase().includes(searchQuery.toLowerCase())||product.price.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   function FilterBySize({ size }) {
     return (
       <div className="flex justify-evenly">
-        <button className="focus:text-black hover:bg-secondary-color border w-8 h-8 mx-1 rounded-sm">
+        <button
+          className="focus:text-black hover:bg-secondary-color border w-8 h-8 mx-1 rounded-sm"
+          onClick={() =>
+            speakText(
+              `${size} clicked, this will pick this item with a size of ${size}; Remember to use the buy now button to add to cart`
+            )
+          }
+        >
           {size}
         </button>
       </div>
@@ -105,16 +120,45 @@ export default function Home({ userInfo }: any) {
     width,
     height,
     price,
+    color,
+    brand,
+    size,
     productDetail = "Sollgen monollogi",
   }) {
+    let sizeToBeRead;
+    switch (size) {
+      case "XM":
+        sizeToBeRead = "extra small";
+        // return sizeToBeRead;
+        break;
+      case "SM":
+        sizeToBeRead = "small";
+        break;
+      case "L":
+        sizeToBeRead = "Large";
+        break;
+      case "XL":
+        sizeToBeRead = "extra large";
+        break;
+      case "M":
+        sizeToBeRead = "medium";
+        break;
+
+      default:
+        sizeToBeRead = "large";
+    }
+
     return (
       <div className="max-w-[180px] p-1 ">
         <div
-          className="bg-no-repeat bg-cover bg-center items-center flex justify-center md:min-h-[12v]"
+          className="bg-no-repeat bg-cover bg-center items-center flex justify-center md:min-h-[12v] rounded-none"
           onClick={() => {
             setSource(imageSource);
             setOpenModal(true);
             handleSizeClick("lg");
+            speakText(
+              `product clicked. This product tagged: ${productDetail} is a ${color} dress produced by ${brand}. It's Size is ${sizeToBeRead} and it is sold for ₦${price}.`
+            );
           }}
           style={{
             height: height,
@@ -157,9 +201,19 @@ export default function Home({ userInfo }: any) {
   function RenderHeader({ heading }) {
     return (
       <Flex className="justify-between p-6">
-        <Text className="pageHeading dark:text-white">{heading}</Text>
+        <Text
+          className="pageHeading dark:text-white"
+          onClick={() => speakText(`You are on the Home page,  ${heading}`)}
+        >
+          {heading}
+        </Text>
         <div className="flex gap-x-2">
-          <Link href="/cart">
+          <Link
+            href="/cart"
+            onClick={() =>
+              speakText("Cart icon clicked, redirecting to cart page")
+            }
+          >
             <Image
               width={22}
               height={22}
@@ -168,7 +222,12 @@ export default function Home({ userInfo }: any) {
               className="h-12 bg-secondary-color w-12 rounded-full p-2.5 shrink-0 text-gray-400 ml-2 cursor-pointer"
             />
           </Link>
-          <Link href={"/profile"}>
+          <Link
+            href={"/profile"}
+            onClick={() =>
+              speakText("Profile icon clicked, redirecting to Profile page")
+            }
+          >
             <Image
               width={50}
               height={50}
@@ -188,8 +247,11 @@ export default function Home({ userInfo }: any) {
         <RenderHeader heading="Catalog" />
 
         <Flex className="mx-6 my-2.5 self-center">
-          <input
-            type="search"
+        <input
+            name="search"
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-[75vw] h-[41px] shrink-0 rounded-[180px] border border-[#090909]"
           />
           <Image
@@ -197,7 +259,12 @@ export default function Home({ userInfo }: any) {
             height={24}
             src={Filter}
             alt=""
-            onClick={() => setDisplay("filter")}
+            onClick={async () => {
+              await speakText(
+                "opening filter,In this filter screen there are options like brand, size, color where you can determine how you would like the products to be rendered. After selecting from the options you prefer, click the generate button to proceed. "
+              );
+              setDisplay("filter");
+            }}
             className="h-6 w-6 shrink-0 text-gray-400 ml-2 cursor-pointer"
           />
         </Flex>
@@ -209,7 +276,10 @@ export default function Home({ userInfo }: any) {
                 ? "bg-secondary-color"
                 : "bg-transparent"
             } `}
-            onClick={() => setProductDisplay("Trending")}
+            onClick={() => {
+              setProductDisplay("Trending");
+              speakText("Displaying Trending products");
+            }}
           >
             <Text className="text-center text-[18px] dark:text-white fontPoppins line-height-normal">
               Trending
@@ -221,7 +291,10 @@ export default function Home({ userInfo }: any) {
                 ? "bg-secondary-color"
                 : "bg-transparent"
             } `}
-            onClick={() => setProductDisplay("New Arrivals")}
+            onClick={() => {
+              setProductDisplay("New Arrivals");
+              speakText("Displaying New Arrivals ");
+            }}
           >
             <Text className="text-center text-[18px]  fontPoppins flex flex-row font-[400]">
               New Arrivals
@@ -233,7 +306,10 @@ export default function Home({ userInfo }: any) {
                 ? "bg-secondary-color"
                 : "bg-transparent"
             } `}
-            onClick={() => setProductDisplay("others")}
+            onClick={() => {
+              setProductDisplay("others");
+              speakText("Displaying other products");
+            }}
           >
             <Text className="text-center text-[18px] fontPoppins line-height-normal">
               Others
@@ -241,80 +317,66 @@ export default function Home({ userInfo }: any) {
           </button>
         </section>
 
+        {/* <main className="grid grid-cols-2 mt-4 flex-1 w-full">
+          {products.map(
+            ({ imageSource, width, height, price, color, brand, size }) => (
+              <>
+                <RenderStock
+                  imageSource={imageSource}
+                  width={width}
+                  height={height}
+                  price={price}
+                  color={color}
+                  brand={brand}
+                  size={size}
+                />
+              </>
+            )
+          )}
+        </main> */}
+        
         <main className="grid grid-cols-2 mt-4 flex-1 w-full">
-          <RenderStock
-            imageSource="blouse.png"
-            width="180px"
-            height="144px"
-            price="1200"
-          />
-
-          <RenderStock
-            imageSource="shirt-stack.png"
-            width="180px"
-            height="197px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="gown_cinderella.png"
-            width="178px"
-            height="197px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="cloth_random.png"
-            width="180px"
-            height="144px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="trouser.png"
-            width="180px"
-            height="144px"
-            price="1200"
-          />
-
-          <RenderStock
-            imageSource="trouser_women.png"
-            width="178px"
-            height="197px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="combo_one.jpg"
-            width="178px"
-            height="197px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="combo_two.jpg"
-            width="178px"
-            height="197px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="Vintage_shirt.jpg"
-            width="178px"
-            height="197px"
-            price="1200"
-          />
-          <RenderStock
-            imageSource="combo_four.jpg"
-            width="178px"
-            height="197px"
-            price="1200"
-          />
+          {filteredProducts.map(
+            ({
+              imageSource,
+              width,
+              height,
+              price,
+              color,
+              brand,
+              size,
+              productDetail,
+            }) => (
+              <RenderStock
+                key={imageSource}
+                imageSource={imageSource}
+                width={width}
+                height={height}
+                price={price}
+                color={color}
+                brand={brand}
+                size={size}
+                productDetail={productDetail}
+              />
+            )
+          )}
         </main>
       </>
     );
   }
 
-  const Circle = ({ isActiveCircle }) => {
+  const Circle = ({ isActiveCircle, color }) => {
     return (
       <span
-        onClick={() => setActiveCircle(isActiveCircle)}
+        style={{ backgroundColor: color }}
+        onClick={() => {
+          setActiveCircle(isActiveCircle);
+          speakText(
+            `${color} clicked, this will pick the cloth displayed with a color of ${color} when adding to cart`
+          );
+        }}
         className={`${
-          activeCircle == isActiveCircle ? "bg-[#031E2C]" : "bg-transparent"
+          activeCircle == isActiveCircle ? `bg-[${color}]` : "bg-transparent"
         }  rounded-full h-2.5 w-2.5 outline outline-[#031E2C] space-2 inline-block text-center`}
       />
     );
@@ -331,38 +393,33 @@ export default function Home({ userInfo }: any) {
   function ModalPage() {
     return (
       <div className="dark:bg-black dark:text-silver min-w-screen ease-in-out duration-1000 min-h-screen pb-8">
-        {/* <Image
-       width= {428}
-       height= {491}
-        src={imageSourceOfSelectedStock}
-        alt=""
-        className="min-w-full shrink-0 text-gray-400 cursor-pointer"
-      /> */}
-        {/* <div
-          className="bg-no-repeat bg-cover bg-center"
-          style={{
-            height: 491,
-            width: "100vw",
-            backgroundImage: `url(/assets/${source})`,
-          }}>
-            <RenderModalHeader closeModalProp={()=>{setOpenModal(false)}}/>
 
-          </div> */}
         <Carousel
           imageSelected={source}
           modalState={() => {
             setOpenModal(false);
           }}
         />
-        <section className="px-2 min-w-full -mt-6">
-          <Flex className="items-center justify-between px-1">
-            <Text className="normalTextBold">Sollgen Monologi</Text>
-            <Text className="normalText">₦1200</Text>
+        <section className="px-2 min-w-full">
+          <Flex className="items-center justify-between px-1 ">
+            <Text
+              onClick={() => speakText("sollgen Monologi")}
+              className="normalTextBold"
+            >
+              Sollgen Monologi
+            </Text>
+            <Text className="normalText" onClick={() => speakText("₦1200")}>
+              ₦1200
+            </Text>
           </Flex>
-          <Text className="normalText">
-            Soligen monologi. Mikroliga astroktiga. Homodölig. Liling sore.
-            Soligen monologi. Mikroliga astroktiga. Homodölig. Liling sore.
-          </Text>
+
+          <div onClick={() => speakText(`${dummyText} ${dummyText}`)}>
+            <Text className="normalText">
+              {dummyText}
+              <br />
+              {dummyText}
+            </Text>
+          </div>
 
           <Flex className="flex-row items-center justify-between my-2">
             <span className=" flex items-center justify-between pb-1 h-12">
@@ -371,9 +428,9 @@ export default function Home({ userInfo }: any) {
               ))}
             </span>
             <div className="flex gap-x-2.5">
-              <Circle isActiveCircle="one" />
-              <Circle isActiveCircle="two" />
-              <Circle isActiveCircle="three" />
+              <Circle isActiveCircle="one" color="red" />
+              <Circle isActiveCircle="two" color="purple" />
+              <Circle isActiveCircle="three" color="green" />
             </div>
           </Flex>
 
@@ -429,7 +486,7 @@ export default function Home({ userInfo }: any) {
           setIsSuccessful(false);
         }}
       />
-    )
+    );
   }
 
   if (confirm) {
