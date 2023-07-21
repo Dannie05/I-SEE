@@ -131,6 +131,17 @@ export default function FilterPage({ onPressFunc }) {
     );
   }
 
+  function handleGenerate() {
+    const filterCriteria = {
+      brand: selectedBrand,
+      size: selectedSize,
+      color: selectedColor,
+      price: selectedPrice,
+    };
+    setFilterCriteria(filterCriteria);
+    onPressFunc();
+  }
+
   return (
     <div className="dark:bg-black dark:text-silver  ease-in-out duration-1000 min-h-screen pb-28 pt-4 ">
       <Navigation />
