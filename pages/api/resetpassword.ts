@@ -1,6 +1,6 @@
 import { dbCon } from "../../models";
 import { NextApiRequest, NextApiResponse } from "next";
-import { sendPasswordResetEmail } from "../../lib/email";
+// import { sendPasswordResetEmail } from "../../lib/email";
 import crypto from "crypto";
 
 export default async function resetpassword(req:NextApiRequest, res:NextApiResponse) {
@@ -40,7 +40,7 @@ export default async function resetpassword(req:NextApiRequest, res:NextApiRespo
     );
 
     // Send the password reset email to the user
-    await sendPasswordResetEmail(email, resetToken);
+    // await sendPasswordResetEmail(email, resetToken);
 
     res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
