@@ -14,6 +14,7 @@ import Filter from "../public/images/Filter.png";
 import microphone from "../public/images/microphone.png";
 import { sizes } from "../components/filters";
 export default function Favorites() {
+  const [filterCriteria, setFilterCriteria] = useState(null);
 
   function FilterBySize({ size }) {
     return (
@@ -28,6 +29,8 @@ export default function Favorites() {
       </div>
     );
   }
+
+
 
   const RenderFavorites = ({ imageSource, price }) => {
     return (
@@ -62,7 +65,7 @@ export default function Favorites() {
   const [display,setDisplay]= useState("none")
 
   if(display=="filter"){
-    return <FilterPage onPressFunc={()=>setDisplay("none")}/>
+    return <FilterPage onPressFunc={()=>setDisplay("none")} setFilterCriteria={setFilterCriteria}/>
   }
 
 
