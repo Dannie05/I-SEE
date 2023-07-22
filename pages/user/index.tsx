@@ -125,9 +125,9 @@ export default function Home({ userInfo }: any) {
     const utterance = new SpeechSynthesisUtterance(text);
     synth.speak(utterance);
   };
-  // const filteredProducts = products.filter((product) =>
-  //   product.productDetail.toLowerCase().includes(searchQuery.toLowerCase())||product.price.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const filteredProductsBySearch = products.filter((product) =>
+    product.productDetail.toLowerCase().includes(searchQuery.toLowerCase())||product.price.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   function FilterBySize({ size }) {
     return (
       <div className="flex justify-evenly">

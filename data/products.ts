@@ -40,7 +40,7 @@ const products = [
       productDetail: "Cloth",
     },
     {
-      imageSource: "Trouser.png",
+      imageSource: "trouser.png",
       width: "180px",
       height: "144px",
       price: "1200",

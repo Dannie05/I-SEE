@@ -4,6 +4,7 @@ import RenderHeader from "./renderHeader";
 import { FaChevronLeft } from "react-icons/fa";
 import microphone from "../public/images/microphone.png";
 import Image from "next/image";
+import {useToast} from "@chakra-ui/react"
 import {
   Text,
   Button,
@@ -34,7 +35,7 @@ export default function FilterPage({ onPressFunc, setFilterCriteria  }) {
             type="checkbox"
             value=""
             className="w-4 h-4 text-secondary-color bg-primary-color border-gray-300 rounded focus:ring-primary-color dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            onClick={()=>{setSelectedBrand(brand)}}
+            onClick={()=>{setSelectedBrand(brand); Toaster(brand);  }}
           />
           <label
             htmlFor="link-checkbox"
@@ -68,8 +69,9 @@ export default function FilterPage({ onPressFunc, setFilterCriteria  }) {
       <div className="flex justify-evenly">
         <Button
           variant="outline"
+          colorScheme="lightGreen"
           className="focus:text-black hover:bg-secondary-color"
-          onClick={()=>setSelectedSize(size)}
+          onClick={()=>{setSelectedSize(size); Toaster(size)}}
         >
           {size}
         </Button>
@@ -151,7 +153,21 @@ export default function FilterPage({ onPressFunc, setFilterCriteria  }) {
     console.log(filterCriteria)
     onPressFunc();
   }
+  
+  const toast = useToast();
 
+function Toaster (title) {
+  toast({
+    title: `${title} selected`,
+    // description: data.error,
+    status: "success",
+    duration: 5000,
+    isClosable: true,
+    position: "top",
+    size: { width: "300", height: "200" },
+    variant: "top-accent",
+  });
+}
   return (
     <div className="dark:bg-black dark:text-silver  ease-in-out duration-1000 min-h-screen pb-28 pt-4 ">
       <Navigation />
