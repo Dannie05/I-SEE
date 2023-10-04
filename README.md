@@ -1,5 +1,5 @@
 # DESCRIPTION
-This is a bill payment application, built with nextjs and TypeScript stlyed with tailwind and bootstrap
+This is an e-commerce application, built with nextjs and TypeScript stlyed with tailwind and bootstrap
 
 # DATABASE
 Mongodb with mongoose
